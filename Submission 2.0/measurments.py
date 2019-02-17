@@ -1,28 +1,20 @@
-
-"""
-@Sai Siddartha Maram
---------------------
-The following module achieve the below mentioned tasks
-
-
-1) the length (depth) of a pavement marking, and guardrail distance, 
-2) the height of a sign post and a light pole, 
-3) an area, pothole area or patched area,
-4) x, y coordinates of a point (by pointing to a location)
-
-"""
-
-
-
 import cv2
 import numpy as np
 
 
 
+print("Welcome to Application 2.0")
+print("press the number coresponding to perfrom the action")
+print("1 : To get x,y cordinates")
+print("2 : The area of selected region")
+print("3 : The height and length of a region")
 
-""""
-some global utility variables
-"""
+print("Choose")
+option=input()
+option=int(option)
+
+
+
 font                   = cv2.FONT_HERSHEY_SIMPLEX
 bottomLeftCornerOfText = (10,500)
 fontScale              = 1
@@ -38,18 +30,59 @@ def mouse_callback_get_cordinates(event,x,y,flags,param):
 
 
 
-reference_points=[]
-cropping=False
+refPt=[]
+cropping = False
+
+def click_and_crop(event, x, y, flags, param):
+    global refPt,cropping
+    if event == cv2.EVENT_LBUTTONDOWN:
+        print("button pressed")
+        print("appeding",x,y)
+        refPt.append((x,y))
+        cropping=True
+
+    elif event == cv2.EVENT_LBUTTONUP:
+        print("button released")
+        print("appeding",x,y)
+        refPt.append((x,y))
+        cropping=False
+
+        cv2.rectangle(img, refPt[0], refPt[1], (0, 255, 0), 2)
+        cv2.imshow("image", img)
+        print("Storing image to find area")
+    
+        roi = img[refPt[0][1]:refPt[1][1], refPt[0][0]:refPt[1][0]]
+        cv2.imshow("ROI", roi)
+        cv2.imwrite("area.jpg",roi)
+
+        to_draw_contors=cv2.imread("area.jpg",0)
+        ret,thresh = cv2.threshold(to_draw_contors,127,255,0)
+        cnt_img,contours,hierarchy = cv2.findContours(thresh, 1, 2)
+        cv2.imshow('contor',cnt_img)
+        cnt = contours[0]
+        area = cv2.contourArea(cnt)
+        print("area:",area)
+        
+    return 0 
 
 
-def click_and_crop
 
 
-
-
-img = cv2.imread('00018.jpeg')
+img = cv2.imread('stop.jpg')
 cv2.namedWindow('image')
-cv2.setMouseCallback('image',mouse_callback_get_cordinates)
+
+if option==1:
+     cv2.setMouseCallback('image',mouse_callback_get_cordinates)
+
+
+
+elif option==2:
+    cv2.setMouseCallback("image", click_and_crop)
+
+else:
+    print("more yet to come")
+ 
+
 
 
 while(1):
