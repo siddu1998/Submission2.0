@@ -49,35 +49,56 @@ def click_and_crop(event, x, y, flags, param):
 
         cv2.rectangle(img, refPt[0], refPt[1], (0, 255, 0), 2)
         cv2.imshow("image", img)
-        print("Storing image to find area")
+    
     
         roi = img[refPt[0][1]:refPt[1][1], refPt[0][0]:refPt[1][0]]
-        cv2.imshow("ROI", roi)
-        cv2.imwrite("area.jpg",roi)
-
-        to_draw_contors=cv2.imread("area.jpg",0)
-        ret,thresh = cv2.threshold(to_draw_contors,127,255,0)
+        if roi is not None:
+            cv2.imshow("ROI", roi)
+            cv2.imwrite("roi.jpeg",roi)
+        else:
+            print("Your roi is to small to process")
+        roi_gray=imgray = cv2.cvtColor(roi,cv2.COLOR_BGR2GRAY)
+        ret,thresh = cv2.threshold(roi_gray,127,255,0)
         cnt_img,contours,hierarchy = cv2.findContours(thresh, 1, 2)
-        cv2.imshow('contor',cnt_img)
-        cnt = contours[0]
-        area = cv2.contourArea(cnt)
-        print("area:",area)
         
+        if cnt_img is not None:
+            cv2.imshow("CNT",cnt_img)
+            cv2.imwrite("cnt.jpeg",cnt_img)
+        else:
+            print("No contour found sorry :-(")
+        if len(contours)>0:
+            cnt = contours[0]
+            area = cv2.contourArea(cnt)
+            print("area in pixels:",area)
+            print("actual area of image based on image callibration (area * scale):",area)
+
+
+
+            rect = cv2.minAreaRect(cnt)
+            box=cv2.boxPoints(rect)
+            box=np.int0(box)
+            cv2.drawContours(roi,[box],0,(0,0,255),2)
+            cv2.imshow("roi",roi)
+
+
     return 0 
 
 
 
 
-img = cv2.imread('stop.jpg')
+img = cv2.imread('road.jpg')
+img=cv2.resize(img,(500,500))
+
 cv2.namedWindow('image')
 
 if option==1:
      cv2.setMouseCallback('image',mouse_callback_get_cordinates)
-
+     
 
 
 elif option==2:
     cv2.setMouseCallback("image", click_and_crop)
+    
 
 else:
     print("more yet to come")
