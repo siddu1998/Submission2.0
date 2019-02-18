@@ -32,6 +32,7 @@ ap.add_argument("-i2", "--image2",required=True,help="Path to the second image")
 
 args = vars(ap.parse_args())
  
+print("User ROI selector, Please press 'O' once you are done!")
 image1 = cv2.imread(args["image1"])
 cv2.namedWindow("image1")
 cv2.imshow("image1",image1)
@@ -45,3 +46,19 @@ cv2.setMouseCallback("image2", click_and_crop,image2)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+
+image_before_travelling_distance=cv2.imread('before_distance.jpeg')
+image_after_travelling_distance=cv2.imread('after_distance.jpeg')
+
+X1, Y1,_ = image_before_travelling_distance.shape
+X2, Y2,_ = image_after_travelling_distance.shape
+
+
+print("Thanks for cropping: Your object size (in pixels) w.r.t to the image sensor is as follows")
+
+print('Before moving a distance of d Image width of sign in approx:{} pixels:'.format(X1))
+print('Before moving a distance of d Image height of sign in approx:{} pixels:'.format(Y1))
+
+print('After moving a distance of d Image width of sign in approx:{} pixels:'.format(X2))
+print('After moving a distance of d Image height of sign in approx:{} pixels:'.format(Y2))
