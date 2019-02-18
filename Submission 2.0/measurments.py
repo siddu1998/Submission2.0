@@ -62,7 +62,7 @@ def mouse_callback_get_cordinates(event,x,y,flags,param):
         data="x:{},y:{}".format(x,y)
         clone=img.copy()
         cv2.putText(clone,data,(10,500), font, 2,(0,0,0),2,cv2.LINE_AA)
-        show("cloned",clone)
+        cv2.imshow("cloned",clone)
         print("x:{},y:{}".format(x,y))
 
 
@@ -105,15 +105,9 @@ def click_and_crop(event, x, y, flags, param):
         if len(contours)>0:
             cnt = contours[0]
             area = cv2.contourArea(cnt)
-    print("area in pixels:",area)
-    print("actual area of image based on image callibration (area * scale):",area)
+    print('pixel width of region': )
 
 
-
-            
-
-
-    return 0 
 
 
 
