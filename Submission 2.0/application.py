@@ -51,14 +51,14 @@ cv2.destroyAllWindows()
 image_before_travelling_distance=cv2.imread('before_distance.jpeg')
 image_after_travelling_distance=cv2.imread('after_distance.jpeg')
 
-X1, Y1,_ = image_before_travelling_distance.shape
-X2, Y2,_ = image_after_travelling_distance.shape
+x1, y1,_ = image_before_travelling_distance.shape
+x2, y2,_ = image_after_travelling_distance.shape
 
 
 print("Thanks for cropping: Your object size (in pixels) w.r.t to the image sensor is as follows")
 
-print('Before moving a distance of d Image width of sign in approx:{} pixels:'.format(X1))
-print('Before moving a distance of d Image height of sign in approx:{} pixels:'.format(Y1))
+print('Before moving a distance of d Image width of sign in approx x1:{} pixels:'.format(X1))
+print('Before moving a distance of d Image height of sign in approx y1:{} pixels:'.format(Y1))
 
-print('After moving a distance of d Image width of sign in approx:{} pixels:'.format(X2))
-print('After moving a distance of d Image height of sign in approx:{} pixels:'.format(Y2))
+print('After moving a distance of d Image width of sign in approx x2:{} pixels:'.format(X2))
+print('After moving a distance of d Image height of sign in approx y2:{} pixels:'.format(Y2))
