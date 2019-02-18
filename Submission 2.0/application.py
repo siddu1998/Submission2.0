@@ -4,6 +4,9 @@ import cv2
 refPt = []
 cropping = False
 i=0
+distance = int(input("Please enter the distance between two consecutive images"))
+
+
 def click_and_crop(event, x, y, flags, param):
         global refPt, cropping,i
         if event == cv2.EVENT_LBUTTONDOWN:
@@ -62,3 +65,5 @@ print('Before moving a distance of d Image height of sign in approx y1:{} pixels
 
 print('After moving a distance of d Image width of sign in approx x2:{} pixels:'.format(X2))
 print('After moving a distance of d Image height of sign in approx y2:{} pixels:'.format(Y2))
+
+
