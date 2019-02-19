@@ -64,8 +64,8 @@ cv2.destroyAllWindows()
 image_before_travelling_distance=cv2.imread('before_distance.jpeg')
 image_after_travelling_distance=cv2.imread('after_distance.jpeg')
 
-x1, y1,_ = image_before_travelling_distance.shape
-x2, y2,_ = image_after_travelling_distance.shape
+y1, x1,_ = image_before_travelling_distance.shape
+y2, x2,_ = image_after_travelling_distance.shape
 
 
 print("Thanks for cropping: Your object size (in pixels) w.r.t to the image sensor is as follows")
