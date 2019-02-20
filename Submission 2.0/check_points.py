@@ -4,16 +4,19 @@ import math
 img=cv2.imread('00130.jpeg')
 y, x,_ = img.shape
 
+
 print('length:',x)
 print('width:',y)
 diagnol_length = math.sqrt(x*x + y*y)
 
+
 print('diagnol length',diagnol_length)
 print('assuming angle of view:',45)
 
-angle_per_pixel=120/diagnol_length
 
-print('angle per pixel:',angle_per_pixel)
+angle_per_pixel=1
+
+print('angle per pixel:',120/800)
 
 center_pixel_x,center_pixel_y=x/2,y/2
 
