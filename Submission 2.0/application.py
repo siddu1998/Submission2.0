@@ -18,7 +18,10 @@ imports :
 """
 import argparse
 import cv2
-from utility_functions import (get_angle,get_distance_between_cordinates)
+from utility_functions import (
+                        get_angle,
+                        get_area,
+                        get_distance_between_cordinates)
 
 
 """
@@ -132,3 +135,4 @@ print("Estimated angle of device of sign from device after distance d: ",theta_2
 
 approx_final_distance_between_camera_and_sign= args["distance"] * (x1/float(abs(x2-x1)))
 print(approx_final_distance_between_camera_and_sign)
+

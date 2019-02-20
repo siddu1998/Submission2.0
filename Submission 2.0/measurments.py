@@ -105,7 +105,7 @@ def click_and_crop(event, x, y, flags, param):
         if len(contours)>0:
             cnt = contours[0]
             area = cv2.contourArea(cnt)
-    print('pixel width of region': )
+            print('pixel width of region' )
 
 
 

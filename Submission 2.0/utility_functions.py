@@ -1,9 +1,14 @@
 import cv2
 from math import sin, cos, sqrt, atan2, radians
+import numpy as np
 
-
-"""R-->Radius of the earth"""
+"""
+R-->Radius of the earth
+kernel --> kernel for smoothing and noise reduction
+"""
 R = 6373.0
+kernel = np.ones((3, 3), np.uint8)
+
 
 """
 def get_angle
@@ -66,3 +71,44 @@ def get_distance_between_cordinates(lat1,lon1,lat2,lon2):
 
     
     return distance
+
+
+
+
+def morphology(black_white, kernel):
+    closing = cv2.morphologyEx(black_white, cv2.MORPH_CLOSE, kernel)
+    opening = cv2.morphologyEx(closing, cv2.MORPH_OPEN, kernel)
+    return opening
+
+
+def _rgb_threshold(rgb, rgb_t=180):
+    low_rgb = np.array([rgb_t, rgb_t, rgb_t])
+    high_rgb = np.array([255, 255, 255])
+    black_white = cv2.inRange(rgb, low_rgb, high_rgb)
+    return black_white
+
+
+def _drgb_threshold(img, drgb_t=30):
+    blank_drgb = np.zeros(img.shape, np.uint8)
+    b = np.array(img[:, :, 0], np.int)
+    g = np.array(img[:, :, 1], np.int)
+    r = np.array(img[:, :, 2], np.int)
+    blank_drgb[:, :, 0] = np.absolute(np.subtract(b, r))
+    blank_drgb[:, :, 1] = np.absolute(np.subtract(g, b))
+    blank_drgb[:, :, 2] = np.absolute(np.subtract(r, g))
+    lower = np.array([0, 0, 0])
+    higher = np.array([drgb_t, drgb_t, drgb_t])
+    mask = cv2.inRange(blank_drgb, lower, higher)
+    return mask
+
+def get_area(img):
+        thresh_rgb=_rgb_threshold(img, 180)
+        thresh_rgb = morphology(thresh_rgb, kernel)
+
+        thresh_Drgb = _drgb_threshold(img)
+        thresh_Drgb = morphology(thresh_Drgb, kernel)
+
+        thresh = cv2.bitwise_and(thresh_rgb, thresh_Drgb)
+        cnt_img,contours,_ = cv2.findContours(thresh, 1, 2)
+        cv2.imwrite('cnt_image.jpeg',cnt_img)
+        return cv2.contourArea(contours)
