@@ -18,7 +18,7 @@ imports :
 """
 import argparse
 import cv2
-from utility_functions import (get_angle)
+from utility_functions import (get_angle,get_distance_between_cordinates)
 
 
 """
