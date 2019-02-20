@@ -2,6 +2,14 @@ import cv2
 import math
 
 
+
+"""
+def get_angle
+    @param: image and pixel to find angle
+    @returns theta w.r.t diagnol
+"""
+
+
 def get_angle(img,coi_x,coi_y):
 
     y, x,_ = img.shape
