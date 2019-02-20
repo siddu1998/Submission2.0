@@ -32,7 +32,7 @@ distance_between_center_and_center_roi=math.sqrt(math.pow(x_distance,2)+math.pow
 cv2.line(img,(614,443),(center_pixel_x,center_pixel_y),(255,0,0),4,2)
 print(distance_between_center_and_center_roi)
 print("approximate angle of image between camera and sign:",(distance_between_center_and_center_roi*angle_per_pixel))
-
+print('press 0 once you note the angle')
 cv2.imshow('point',img)
 cv2.waitKey(0)
 

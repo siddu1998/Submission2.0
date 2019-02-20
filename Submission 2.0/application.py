@@ -1,6 +1,7 @@
 import argparse
 import cv2
- 
+from check_point2 import (get_angle)
+
 refPt = []
 cropping = False
 i=0
@@ -78,9 +79,14 @@ print('After moving a distance of d Image height of sign in approx y2:{} pixels:
 print('coi_x_1 : {}, coi_y_1 : {}'.format(coi_1_x,coi_1_y))
 print('coi_x_2 : {}, coi_y_2 : {}'.format(coi_2_x,coi_2_y))
 
+theta_1=get_angle(image1,coi_1_x,coi_1_y)
+theta_2=get_angle(image2,coi_2_x,coi_2_y)
+
+
+print("Estimated angle of device of sign from device before distance d: ",theta_1)
+print("Estimated angle of device of sign from device after distance d: ",theta_2)
 
 
 
-
-
-print("Estimated angle of device of sign from device")
+approx_final_distance_between_camera_and_sign= distance * (x1/float(abs(x2-x1)))
+print(approx_final_distance_between_camera_and_sign)
