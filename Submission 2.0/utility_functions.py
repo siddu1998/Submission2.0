@@ -64,4 +64,5 @@ def get_distance_between_cordinates(lat1,lon1,lat2,lon2):
 
     distance = R * c
 
-    print("Result:", distance)
+    
+    return distance
