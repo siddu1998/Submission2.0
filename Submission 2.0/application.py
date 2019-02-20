@@ -1,17 +1,64 @@
+#Sai Siddartha Maram (Incoming Intern GTech)
+"""
+inputs :
+        image1
+        image2
+        distance
+output:
+        approximate distance between image 
+        sensor and tapped sign board
+"""
+
+"""
+imports :
+        argparse: to take in input images path and distance
+        cv2     : computer vision 
+        get_angle: from utility_functions for getting angle between pixel and sensor
+
+"""
 import argparse
 import cv2
-from check_point2 import (get_angle)
+from utility_functions import (get_angle)
 
+
+"""
+taking input arguments --image1 --image2 --distance on terminal
+"""
+ap = argparse.ArgumentParser()
+ap.add_argument("-i1", "--image1", required=True, help="Path to the image")
+ap.add_argument("-i2", "--image2",required=True,help="Path to the second image")
+ap.add_argument("-i2", "--distance",required=True,help="distance between two consecutive images")
+
+args = vars(ap.parse_args())
+
+
+
+"""
+global variables:
+        refPt --> to get cropped region cordinates
+        cropping --> flag to check status
+        i       --> flag to check currently crooped imgae
+        coi_1/2_x/y --> center of sign board pixels w.r.t image
+
+"""
 refPt = []
 cropping = False
 i=0
-distance = int(input("Please enter the distance between two consecutive images"))
 
 #center pixels of roi
 coi_1_x=0
 coi_1_y=0
 coi_2_x=0
 coi_2_y=0
+
+
+"""
+click_and_crop: 
+        @param: mouse_event, mouse cordinates, param(here image)
+        @role : Takes in image mouse cordinates of roi and crops in out
+        @returns: saves roi in pwd
+"""
+
 
 def click_and_crop(event, x, y, flags, param):
         global refPt, cropping,i,coi_1_x,coi_1_y,coi_2_x,coi_2_y
@@ -40,11 +87,6 @@ def click_and_crop(event, x, y, flags, param):
 
                 
 
-ap = argparse.ArgumentParser()
-ap.add_argument("-i1", "--image1", required=True, help="Path to the image")
-ap.add_argument("-i2", "--image2",required=True,help="Path to the second image")
-
-args = vars(ap.parse_args())
  
 print("User ROI selector, Please press 'O' once you are done!")
 image1 = cv2.imread(args["image1"])
@@ -88,5 +130,5 @@ print("Estimated angle of device of sign from device after distance d: ",theta_2
 
 
 
-approx_final_distance_between_camera_and_sign= distance * (x1/float(abs(x2-x1)))
+approx_final_distance_between_camera_and_sign= args["distance"] * (x1/float(abs(x2-x1)))
 print(approx_final_distance_between_camera_and_sign)
