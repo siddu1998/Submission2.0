@@ -1,7 +1,7 @@
 import cv2
+import math
 
-
-
+fx =  2468.6668434782608
 img_before_distance = cv2.imread('0002875.jpg')
 img_after_distance = cv2.imread('0002876.jpg')
 
@@ -11,8 +11,8 @@ image_height,image_width,_=img_before_distance.shape
 image_center = (image_width/2,image_height/2)
 
 
-location_sign_before_distance=((591*2+42)/2,(102*2+69)/2)
-location_sign_after_distance=((531*2+51)/2,(108*2+69)/2)
+location_sign_before_distance=((591+591+42)/2,(102+102+69)/2)
+location_sign_after_distance=((531+531+51)/2,(108+108+69)/2)
 
 
 cv2.rectangle(img_before_distance,(591,102),(591+42,102+69),(0,0,0),1)
@@ -40,14 +40,25 @@ cv2.imshow('image_after_distance', img_after_distance)
 
 
 print(image_center[0])
-print("location of center of sign before:",location_sign_before_distance[0])
-print("location of center of sign after:",location_sign_after_distance[0])
+
+
+print("location of center of sign before:",float(location_sign_before_distance[0]))
+print("location of center of sign after:",float(location_sign_after_distance[0]))
 
 d_f_c_b_d = image_center[0]-location_sign_before_distance[0]
 d_f_c_a_d = image_center[0]-location_sign_after_distance[0]
 
+
 print("center-sign distance before in pixels:",d_f_c_b_d)
 print("center-sign distance after in pixels:",d_f_c_a_d)
+print("{}/{}-{}".format(location_sign_before_distance[0],location_sign_after_distance[0],location_sign_before_distance[0]))
+l = 5 * (location_sign_after_distance[0]/(location_sign_after_distance[0]-location_sign_before_distance[0]))
+print(abs(l))
+tan_is = image_width/2 
+tan_is =tan_is/fx
+h = (l *  2 * location_sign_after_distance[0] * tan_is)/image_width
+print(abs(h))
+
 
 
 
