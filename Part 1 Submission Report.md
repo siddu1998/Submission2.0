@@ -31,7 +31,7 @@ Before we look into the dataset, let us list out the inputs we have and desired 
     - Which include estimating the area, height and other physical parameters of objects present in the image. All these can be achieved
       using the conept of contours.
 
-####Dataset
+#### Dataset
 The entire dataset is divided into two divisons 
 - GTSV : This division contains data from images sensing vehicle, threr are three stateways from which data is collected.
         - The camera parameters are mentioned in the config.yaml
@@ -52,12 +52,13 @@ The entire dataset is divided into two divisons
 - initally let the sign be x1 <b>pixels</b> wide from the optical center
 - after moving a distance d meters let the sign be a disatane of x2 <b>pixels</b> wide from the optical center.
 - when the car is at a distance of (l+d), let it make an angle of theta-1 beterrn the optical axis and sign.
-then tan(theta-1) = x1(pixels) / f(mm)
+then 
+                          tan(theta-1) = x1(pixels) / f(mm) 
 now we need to make sure the, the units are are same in both denominaor and numerator
 from the camera config.yaml we know the focal length in pixels so, we have
-tan(theta-1)=x1(pixels)/f(pixels)  = x1/f
+                          tan(theta-1)=x1(pixels)/f(pixels)  = x1/f 
 - Simillarly after the car moves a distance of 'd', we have
-tan(theta-2)= x2(pixels)/f(pixels)
+                           tan(theta-2)= x2(pixels)/f(pixels) 
 -Since we have the numeric values of tan(theta-1) and tan(theta-2)
 - we can calculate l and d respectively
 l * tan(theta-2) = (l+d)*tan(theta-1)
