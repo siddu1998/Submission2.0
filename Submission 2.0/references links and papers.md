@@ -15,7 +15,7 @@ https://photo.stackexchange.com/questions/12434/how-do-i-calculate-the-distance-
 
 ### Blogs and Articles 
 https://towardsdatascience.com/vehicle-detection-and-distance-estimation-7acde48256e1
-
+https://www.scantips.com/lights/subjectdistance.html
 
 
 
