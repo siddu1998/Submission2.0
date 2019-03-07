@@ -32,5 +32,7 @@ https://ieeexplore.ieee.org/document/7727017
 
 https://ascelibrary.org/doi/10.1061/%28ASCE%29TE.1943-5436.0000760
 
+http://www.cmlab.csie.ntu.edu.tw/~zenic/Data/Download/ICME2012/Workshops/data/4729a511.pdf
+
 ### MOOCS
 https://www.coursera.org/learn/robotics-perception
