@@ -3,12 +3,15 @@
 ### Stackoverflow posts and other Q&A forums
 https://stackoverflow.com/questions/25375262/how-do-i-convert-focal-length-in-pixels-to-millimeter-mm
 https://stackoverflow.com/questions/14038002/opencv-how-to-calculate-distance-between-camera-and-object-using-image
+https://stackoverflow.com/questions/12007775/to-calculate-world-coordinates-from-screen-coordinates-with-opencv/12011627#12011627
+
 
 http://answers.opencv.org/question/89786/understanding-the-camera-matrix/
 http://answers.opencv.org/question/139166/focal-length-from-calibration-parameters/
 http://answers.opencv.org/question/139166/focal-length-from-calibration-parameters/
 
 
+https://photo.stackexchange.com/questions/12434/how-do-i-calculate-the-distance-of-an-object-in-a-photo
 
 ### Blogs and Articles 
 https://towardsdatascience.com/vehicle-detection-and-distance-estimation-7acde48256e1
