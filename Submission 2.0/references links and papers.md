@@ -5,6 +5,7 @@ https://stackoverflow.com/questions/25375262/how-do-i-convert-focal-length-in-pi
 https://stackoverflow.com/questions/14038002/opencv-how-to-calculate-distance-between-camera-and-object-using-image
 https://stackoverflow.com/questions/12007775/to-calculate-world-coordinates-from-screen-coordinates-with-opencv/12011627#12011627
 https://stackoverflow.com/questions/8698889/how-to-measure-height-width-and-distance-of-object-using-camera
+https://stackoverflow.com/questions/17499409/opencv-calculate-angle-between-camera-and-pixel
 
 http://answers.opencv.org/question/89786/understanding-the-camera-matrix/
 http://answers.opencv.org/question/139166/focal-length-from-calibration-parameters/
