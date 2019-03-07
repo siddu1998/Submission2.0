@@ -21,9 +21,12 @@ https://docs.opencv.org/3.1.0/dc/dbb/tutorial_py_calibration.html
 
 
 ## Research Papers 
+
 https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6161840
 
 https://ieeexplore.ieee.org/document/7727017
+
+https://ascelibrary.org/doi/10.1061/%28ASCE%29TE.1943-5436.0000760
 
 ### MOOCS
 https://www.coursera.org/learn/robotics-perception
