@@ -31,6 +31,7 @@ https://ieeexplore.ieee.org/document/7727017
 https://ascelibrary.org/doi/10.1061/%28ASCE%29TE.1943-5436.0000760
 http://www.cmlab.csie.ntu.edu.tw/~zenic/Data/Download/ICME2012/Workshops/data/4729a511.pdf
 https://pdfs.semanticscholar.org/b6d9/091528c9d564110f6a087a7954cb9e15902f.pdf
+https://repository.up.ac.za/bitstream/handle/2263/57733/Nienaber_Detecting_2015.pdf?sequence=1&isAllowed=y
 
 ### MOOCS
 https://www.coursera.org/learn/robotics-perception
