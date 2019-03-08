@@ -18,6 +18,7 @@ https://photo.stackexchange.com/questions/12434/how-do-i-calculate-the-distance-
 https://towardsdatascience.com/vehicle-detection-and-distance-estimation-7acde48256e1
 https://www.scantips.com/lights/subjectdistance.html
 https://www.pyimagesearch.com/2016/03/28/measuring-size-of-objects-in-an-image-with-opencv/
+https://handmap.github.io/measuring-size-and-distance-opencv/
 
 
 ### Documentation 
