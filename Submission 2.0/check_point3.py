@@ -2,6 +2,8 @@ import cv2
 import math
 import numpy as np 
 import matplotlib.pyplot as plt
+import pandas as pd 
+
 
 
 
@@ -11,6 +13,11 @@ f=2468.6668434782608
 #reading image
 img_before_distance = cv2.imread('0002891.jpg')
 img_after_distance = cv2.imread('0002892.jpg')
+
+
+#reading annotations file
+highway_sign_annotations = pd.read_csv('i75_sign_annotations.csv')
+print(highway_sign_annotations['frame_number']['0002891.jpg'])
 
 
 #distortion matrics
