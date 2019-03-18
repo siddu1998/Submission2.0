@@ -1,5 +1,8 @@
 import cv2
-img=cv2.imread('road_marked.jpg')
-img=cv2.resize(img,(1000,1000))
-cv2.imshow('img',img)
-cv2.waitKey(0)
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+
+image=mpimg.imread("0002878.jpg")
+
+plt.imshow(image)
+plt.show()
