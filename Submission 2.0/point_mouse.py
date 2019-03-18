@@ -6,7 +6,7 @@ ix,iy = -1,-1
 def draw_circle(event,x,y,flags,param):
     global ix,iy
     if event == cv2.EVENT_LBUTTONDBLCLK:
-        cv2.circle(img,(x,y),100,(255,0,0),-1)
+        cv2.circle(img,(x,y),3,(255,0,0),-1)
         ix,iy = x,y
 
 # Create a black image, a window and bind the function to window
