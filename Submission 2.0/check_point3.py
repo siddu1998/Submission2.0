@@ -10,16 +10,15 @@ import pandas as pd
 #reading focal lenghths of the image in pixels and mm
 f=2468.6668434782608 
 
+# before_image_str=str(input("Enter Image name before covering distance"))
+# after_image_str=str(input("Enter Image name after covering a distance of 5m"))
+
 #reading image
-img_before_distance = cv2.imread('0002891.jpg')
-img_after_distance = cv2.imread('0002892.jpg')
+img_before_distance = cv2.imread("0002878.jpg")
+img_after_distance = cv2.imread("0002879.jpg")
 
 
-#reading annotations file
-highway_sign_annotations = pd.read_csv('i75_sign_annotations.csv')
-print(highway_sign_annotations['frame_number']['0002891.jpg'])
-
-
+        
 #distortion matrics
 mtx=[[2468.6668434782608,0,1228.876620888020],[0,2468.6668434782608,1012.976060035710],[0,0,1]]
 dist=[ 0.00125859 , 0 ,  -0.00010658,0 ]
@@ -47,22 +46,29 @@ img_after_distance = img_after_distance[y:y+h, x:x+w]
 
 
 #image center
-image_center = (image_width/2,image_height/2)
+image_center = (int(image_width/2),int(image_height/2))
 
-#location of signs in image,
 
-sign_1_top_left_x=1707
-sign_1_top_left_y=105
-sign_1_width=69
-sign_1_height=75
+#reading annotations file and finding location of sign in images
+highway_sign_annotations = pd.read_csv('i75_sign_annotations.csv')
 
-sign_2_top_left_x=1740
-sign_2_top_left_y=111
-sign_2_width=69
-sign_2_height=78
+for index,row in highway_sign_annotations.iterrows():
+    if row['frame_name']=='0002878.jpg':
+        sign_1_top_left_x=row['top_x']
+        sign_1_top_left_y=row['top_y']
+        sign_1_width=row['width']
+        sign_1_height=row['height']
 
-location_sign_before_distance=((sign_1_top_left_x+sign_1_top_left_x+sign_1_width)/2,(sign_1_top_left_y+sign_1_top_left_y+sign_1_height)/2)
-location_sign_after_distance=((sign_2_top_left_x+sign_2_top_left_x+sign_2_width)/2,(sign_2_top_left_y+sign_2_top_left_y+sign_2_height)/2)
+    if row['frame_name']=='0002879.jpg':
+        sign_2_top_left_x=row['top_x']
+        sign_2_top_left_y=row['top_y']
+        sign_2_width=row['width']
+        sign_2_height=row['height']
+        class_name_image_2=row['class']
+
+
+location_sign_before_distance=(int((sign_1_top_left_x+sign_1_top_left_x+sign_1_width)/2),int((sign_1_top_left_y+sign_1_top_left_y+sign_1_height)/2))
+location_sign_after_distance=(int((sign_2_top_left_x+sign_2_top_left_x+sign_2_width)/2),int((sign_2_top_left_y+sign_2_top_left_y+sign_2_height)/2))
 
 #display images
 cv2.rectangle(img_before_distance,(1707,105),(1707+69,105+75),(0,0,0),1)
@@ -73,19 +79,10 @@ cv2.circle(img_before_distance,location_sign_before_distance,3,(255,0,0),4)
 cv2.circle(img_after_distance,location_sign_after_distance,3,(255,0,0),4)
 cv2.circle(img_after_distance,image_center,3,(255,0,0),4,-1)
 
-# #image center to sign center
+#image center to sign center
 cv2.line(img_before_distance,image_center,location_sign_before_distance,(0,0,0),5,-1)
 cv2.line(img_after_distance,image_center,location_sign_after_distance,(0,0,0),5,-1)
 
-
-#dividing into quardrants
-
-#horizontal
-cv2.line(img_before_distance,(image_width/2,0),(image_width/2,image_height),(0,0,0),4,-1)
-cv2.line(img_after_distance,(image_width/2,0),(image_width/2,image_height),(0,0,0),4)
-#vertical
-cv2.line(img_before_distance,(0,image_height/2),(image_width,image_height/2),(0,0,0),4,-1)
-cv2.line(img_after_distance,(0,image_height/2),(image_width,image_height/2),(0,0,0),4,-1)
 
 #display images resize
 img_before_distance=cv2.resize(img_before_distance,(500,500))
@@ -109,12 +106,12 @@ x2=image_center[0]-location_sign_after_distance[0] #in pixels
 
 
 #calculate how far and how wide
-l = 5 * x1/(x2-x1) 
-w = l * (x2)/f       
+l = 5 * x1/(x2-x1) # 5 in meters x1pixels/x2-x1pixels --> answer in meters
+w = l * (x2)/f     # l in meters x2pixels/fpixels --->answer in meters  
 
 
-print("l in mm",l)
-print("w in mm",w)
+print("l in m",l)
+print("w in m",w)
 
 
 #comparision
