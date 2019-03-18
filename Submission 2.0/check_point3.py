@@ -13,9 +13,15 @@ f=2468.6668434782608
 # before_image_str=str(input("Enter Image name before covering distance"))
 # after_image_str=str(input("Enter Image name after covering a distance of 5m"))
 
+
+image_file_name_before_distance = str(input("Please enter the file name of image before distance "))
+image_file_name_after_distance  = str(input("Please enter the file name of image after distance "))
+
+
+
 #reading image
-img_before_distance = cv2.imread("0002878.jpg")
-img_after_distance = cv2.imread("0002879.jpg")
+img_before_distance = cv2.imread(image_file_name_before_distance)
+img_after_distance  = cv2.imread(image_file_name_after_distance)
 
 
         
@@ -53,13 +59,13 @@ image_center = (int(image_width/2),int(image_height/2))
 highway_sign_annotations = pd.read_csv('i75_sign_annotations.csv')
 
 for index,row in highway_sign_annotations.iterrows():
-    if row['frame_name']=='0002878.jpg':
+    if row['frame_name']== image_file_name_before_distance:
         sign_1_top_left_x=row['top_x']
         sign_1_top_left_y=row['top_y']
         sign_1_width=row['width']
         sign_1_height=row['height']
 
-    if row['frame_name']=='0002879.jpg':
+    if row['frame_name']==image_file_name_after_distance:
         sign_2_top_left_x=row['top_x']
         sign_2_top_left_y=row['top_y']
         sign_2_width=row['width']
@@ -71,8 +77,8 @@ location_sign_before_distance=(int((sign_1_top_left_x+sign_1_top_left_x+sign_1_w
 location_sign_after_distance=(int((sign_2_top_left_x+sign_2_top_left_x+sign_2_width)/2),int((sign_2_top_left_y+sign_2_top_left_y+sign_2_height)/2))
 
 #display images
-cv2.rectangle(img_before_distance,(1707,105),(1707+69,105+75),(0,0,0),1)
-cv2.rectangle(img_after_distance,(1740,111),(1740+69,111+78),(0,0,0),1)
+cv2.rectangle(img_before_distance,(sign_1_top_left_x,sign_1_top_left_y),(sign_1_top_left_x+sign_1_width,sign_1_top_left_y+sign_2_height),(0,0,0),1)
+cv2.rectangle(img_after_distance,(sign_2_top_left_x,sign_2_top_left_y),(sign_2_top_left_x+sign_2_width,sign_2_top_left_y+sign_2_height),(0,0,0),1)
 
 #mark centers of signs
 cv2.circle(img_before_distance,location_sign_before_distance,3,(255,0,0),4)
@@ -92,6 +98,7 @@ cv2.imshow('image_before_distance', img_before_distance)
 cv2.imshow('image_after_distance', img_after_distance)
 
 cv2.waitKey(0)
+
 #destroy all windoes
 cv2.destroyAllWindows()
 
@@ -100,7 +107,6 @@ cv2.destroyAllWindows()
 
 #distance_between_center_and_sign_along_x_before
 x1=image_center[0]-location_sign_before_distance[0] #in pixels
-
 #distance_between_center_and_sign_along_x_after
 x2=image_center[0]-location_sign_after_distance[0] #in pixels
 
@@ -116,13 +122,22 @@ print("w in m",w)
 
 #comparision
 
-g_truth=(732063.6161539537,3738027.0026369933)
-camera=(732095.4582989508,3738103.923706733)
+g_truth=(736465.7375,3750769.212)
+camera=(736497.1112,3750738.772)
 
 pred_1=(camera[0]+w,camera[1]+l)
-
+print(actual_distance)
 #compare results
 print("actual:",g_truth)
 print("pred1:",pred_1)
 print("x cordinate missing mark by: ",g_truth[0]-pred_1[0])
 print("y_cordinate missing mark by:", g_truth[1]-pred_1[1])
+
+
+
+
+
+
+
+
+
