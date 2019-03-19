@@ -6,6 +6,23 @@ import numpy as np
 import pandas as pd
 
 
+
+def draw_boxes_and_points(image,sign_cordinates):
+    #tl
+    cv2.circle(image,(sign_cordinates[0],sign_cordinates[1]),3,(255,255,255),-1)
+    #tr
+    cv2.circle(image,(sign_cordinates[0]+sign_cordinates[2],sign_cordinates[1]),3,(0,0,0),-1)
+    #br
+    cv2.circle(image,(sign_cordinates[0]+sign_cordinates[2],sign_cordinates[1]+sign_cordinates[3]),3,(0,0,255),-1)
+    #bl
+    cv2.circle(image,(sign_cordinates[0],sign_cordinates[1]+sign_cordinates[3]),3,(255,0,0),-1)
+    cv2.imshow("framee",image)
+    points=[(sign_cordinates[0],sign_cordinates[1]),
+            (sign_cordinates[0]+sign_cordinates[2],sign_cordinates[1]),
+            (sign_cordinates[0]+sign_cordinates[2],sign_cordinates[1]+sign_cordinates[3]),
+            (sign_cordinates[0],sign_cordinates[1]+sign_cordinates[3])]
+    return image,points
+
 def clear_distortions(img_before_distance):
     #distortion matrics
     mtx=[[2468.6668434782608,0,1228.876620888020],[0,2468.6668434782608,1012.976060035710],[0,0,1]] 

@@ -30,7 +30,7 @@ taking input arguments --image1 --image2 --distance on terminal
 ap = argparse.ArgumentParser()
 ap.add_argument("-i1", "--image1", required=True, help="Path to the image")
 ap.add_argument("-i2", "--image2",required=True,help="Path to the second image")
-ap.add_argument("-i2", "--distance",required=True,help="distance between two consecutive images")
+ap.add_argument("-d", "--distance",required=True,help="distance between two consecutive images")
 
 args = vars(ap.parse_args())
 

@@ -6,7 +6,7 @@ from tkinter import filedialog
 from core_calculations import *
 
 def select_image():
-    global panelA,panelB,positions
+    global panelA,panelB
     path_a = filedialog.askopenfilename()
     print(path_a[-11:])
     path_b = filedialog.askopenfilename()
@@ -14,7 +14,7 @@ def select_image():
     if len(path_a)>0 and len(path_b)>0:
         image_before_distance=cv2.imread(path_a)
         image_after_distance=cv2.imread(path_b)
-        print(calculation_of_distances(path_a[-11:],path_b[-11:],"i75_sign_annotations.csv","i75_camera_cordinates.csv"))
+        result = (calculation_of_distances(path_a[-11:],path_b[-11:],"i75_sign_annotations.csv","i75_camera_cordinates.csv"))
         image_before_distance=Image.fromarray(image_before_distance)
         image_after_distance=Image.fromarray(image_after_distance)
         
@@ -44,6 +44,7 @@ panelA=None
 panelB=None
 btn = Button(root, text="Select an image", command=select_image)
 btn.pack(side="bottom", fill="both", expand="yes", padx="10", pady="10")
+
 
 # kick off the GUI
 root.mainloop()
