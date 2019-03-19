@@ -14,7 +14,7 @@ def select_image():
     if len(path_a)>0 and len(path_b)>0:
         image_before_distance=cv2.imread(path_a)
         image_after_distance=cv2.imread(path_b)
-        print(calculation_of_distances("0002878.jpg","0002879.jpg","i75_sign_annotations.csv","i75_camera_cordinates.csv"))
+        print(calculation_of_distances(path_a[-11:],path_b[-11:],"i75_sign_annotations.csv","i75_camera_cordinates.csv"))
         image_before_distance=Image.fromarray(image_before_distance)
         image_after_distance=Image.fromarray(image_after_distance)
         
