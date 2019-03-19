@@ -1,9 +1,9 @@
-import cv2
 import math
-import numpy as np 
-import matplotlib.pyplot as plt
-import pandas as pd 
 
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
 
 def clear_distortions(img_before_distance):
@@ -31,8 +31,8 @@ def clear_distortions(img_before_distance):
     
 
 def parsing_annotations(highway_sign_annotations,image_file_name):
-    highway_sign_annotations = pd.read_csv('i75_sign_annotations.csv')
-    for index,row in highway_sign_annotations.iterrows():
+    highway_signs = pd.read_csv(highway_sign_annotations)
+    for index,row in highway_signs.iterrows():
         if row['frame_name']== image_file_name:
             sign_top_left_x=row['top_x']
             sign_top_left_y=row['top_y']
@@ -75,24 +75,30 @@ def trignometric_calculations(x1,x2,f):
     return (w,l)
 
 
-
+def parsing_camrea_annotations(image,camera_annotations):
+    camera_annotations=pd.read_csv(camera_annotations)
+    print(image)
+    for index,row in camera_annotations.iterrows():
+        if row["image_name"]==image:
+            camera_cordinates_x=row['x']
+            camera_cordinates_y=row['y']
+    return (camera_cordinates_x,camera_cordinates_y)
+            
 def camera_to_sign(camera_cordinates,distancs_tuple):
      return (camera_cordinates[0]+distancs_tuple[0],camera_cordinates[1]+distancs_tuple[1])
 
 
-def error_analysis(original_cordinate,predicted_cordinates):
+def error_analysis(predicted_cordinates):
+
+
     print("---------------------------------------------------------")
     print("Error analysis")
     print("---------------------------------------------------------")
-    print("The Ground Truth position of the sign is as follow {} {}".format(original_cordinate[0],original_cordinate[1]))
     print("The predicted outcome after calculation is as follow {} {}".format(predicted_cordinates[0],predicted_cordinates[1]))
     
 
-
-
-
-def calculation_of_distances(image_file_name_before_distance,image_file_name_after_distance,f=2468.6668434782608,d=5,sign_annotations="i75_sign_annotations.csv",camera_cordinates=(736497.1112,3750738.772),g_truth=(736465.7375,3750769.212)):
-    #load image 
+def calculation_of_distances(image_file_name_before_distance,image_file_name_after_distance,sign_annotations,camera_annotations,f=2468.6668434782608,d=5):
+    #load image     
     img_before_distance = cv2.imread(image_file_name_before_distance)
     img_after_distance  = cv2.imread(image_file_name_after_distance)
     
@@ -107,21 +113,21 @@ def calculation_of_distances(image_file_name_before_distance,image_file_name_aft
     #parse annotations for details
     sign_before_distance = parsing_annotations(sign_annotations,image_file_name_before_distance)
     sign_after_distance  = parsing_annotations(sign_annotations,image_file_name_after_distance)
-
     #Find center of sign
     center_before_distance = find_center_of_sign(sign_before_distance)
     center_after_distance  = find_center_of_sign(sign_after_distance)
+ 
 
     #distance between center and sign
     x1=distance_two_points_along_x(center_before_distance,image_center)
     x2=distance_two_points_along_x(center_after_distance,image_center)
     distance_tuple=trignometric_calculations(x1,x2,f)
+    
+    
+    camera_cordinates=parsing_camrea_annotations(image_file_name_after_distance,camera_annotations)
     final_positions = camera_to_sign(camera_cordinates,distance_tuple)
-    error_analysis(g_truth,final_positions)
+
+    error_analysis(final_positions)
     return final_positions
 
-
-
-
-positions = calculation_of_distances('0002878.jpg','0002879.jpg')
 
