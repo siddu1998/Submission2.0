@@ -6,138 +6,122 @@ import pandas as pd
 
 
 
+def clear_distortions(img_before_distance):
+    #distortion matrics
+    mtx=[[2468.6668434782608,0,1228.876620888020],[0,2468.6668434782608,1012.976060035710],[0,0,1]] 
+    dist=[ 0.00125859 , 0 ,  -0.00010658,0 ]
+    #converting into numpy
+    mtx = np.array(mtx)
+    dist=np.array(dist)
+    #image dimenstions
+    image_height,image_width,_=img_before_distance.shape
 
-#reading focal lenghths of the image in pixels and mm
-f=2468.6668434782608 
+    #pumping distortion matrix
+    newcameramtx, roi=cv2.getOptimalNewCameraMatrix(mtx,dist,(image_width,image_height),1,(image_width,image_height))
 
-# before_image_str=str(input("Enter Image name before covering distance"))
-# after_image_str=str(input("Enter Image name after covering a distance of 5m"))
+    #undistort image_before_distance
+    img_before_distance = cv2.undistort(img_before_distance, mtx, dist, None, newcameramtx)
+    x,y,w,h = roi
+    undistorted_image = img_before_distance[y:y+h, x:x+w]
 
+    #undistort image_after_distance
 
-image_file_name_before_distance = str(input("Please enter the file name of image before distance "))
-image_file_name_after_distance  = str(input("Please enter the file name of image after distance "))
+    return undistorted_image
 
+    
 
+def parsing_annotations(highway_sign_annotations,image_file_name):
+    highway_sign_annotations = pd.read_csv('i75_sign_annotations.csv')
+    for index,row in highway_sign_annotations.iterrows():
+        if row['frame_name']== image_file_name:
+            sign_top_left_x=row['top_x']
+            sign_top_left_y=row['top_y']
+            sign_width=row['width']
+            sign_height=row['height']
 
-#reading image
-img_before_distance = cv2.imread(image_file_name_before_distance)
-img_after_distance  = cv2.imread(image_file_name_after_distance)
-
-
-        
-#distortion matrics
-mtx=[[2468.6668434782608,0,1228.876620888020],[0,2468.6668434782608,1012.976060035710],[0,0,1]]
-dist=[ 0.00125859 , 0 ,  -0.00010658,0 ]
-
-#converting into numpy
-mtx = np.array(mtx)
-dist=np.array(dist)
-
-#image dimenstions
-image_height,image_width,_=img_before_distance.shape
-
-#pumping distortion matrix
-newcameramtx, roi=cv2.getOptimalNewCameraMatrix(mtx,dist,(image_width,image_height),1,(image_width,image_height))
-
-#undistort image_before_distance
-img_before_distance = cv2.undistort(img_before_distance, mtx, dist, None, newcameramtx)
-x,y,w,h = roi
-img_before_distance = img_before_distance[y:y+h, x:x+w]
-
-#undistort image_after_distance
-img_after_distance = cv2.undistort(img_after_distance, mtx, dist, None, newcameramtx)
-x,y,w,h = roi
-img_after_distance = img_after_distance[y:y+h, x:x+w]
+    return [sign_top_left_x,sign_top_left_y,sign_width,sign_height]
 
 
-
-#image center
-image_center = (int(image_width/2),int(image_height/2))
-
-
-#reading annotations file and finding location of sign in images
-highway_sign_annotations = pd.read_csv('i75_sign_annotations.csv')
-
-for index,row in highway_sign_annotations.iterrows():
-    if row['frame_name']== image_file_name_before_distance:
-        sign_1_top_left_x=row['top_x']
-        sign_1_top_left_y=row['top_y']
-        sign_1_width=row['width']
-        sign_1_height=row['height']
-
-    if row['frame_name']==image_file_name_after_distance:
-        sign_2_top_left_x=row['top_x']
-        sign_2_top_left_y=row['top_y']
-        sign_2_width=row['width']
-        sign_2_height=row['height']
-        class_name_image_2=row['class']
+def find_center_of_sign(sign_details_list):
+    sign_top_left_x=sign_details_list[0]
+    sign_top_left_y=sign_details_list[1]
+    sign_width=sign_details_list[2]
+    sign_height=sign_details_list[3]
+    location_sign=(int((sign_top_left_x+sign_top_left_x+sign_width)/2),int((sign_top_left_y+sign_top_left_y+sign_height)/2))
+    return location_sign
 
 
-location_sign_before_distance=(int((sign_1_top_left_x+sign_1_top_left_x+sign_1_width)/2),int((sign_1_top_left_y+sign_1_top_left_y+sign_1_height)/2))
-location_sign_after_distance=(int((sign_2_top_left_x+sign_2_top_left_x+sign_2_width)/2),int((sign_2_top_left_y+sign_2_top_left_y+sign_2_height)/2))
+def finding_relative_location_of_image(center_sign):
+    if center_sign[0]<1024:
+        print("sign is to the left of the vehicle")
+        return -1
+    elif center_sign[0]>1024:
+        print("sign is to the right of the vehicle")
+        return 1
+    else:
+        print("sign is alligned with the optical axis")
+        return 0
 
-#display images
-cv2.rectangle(img_before_distance,(sign_1_top_left_x,sign_1_top_left_y),(sign_1_top_left_x+sign_1_width,sign_1_top_left_y+sign_2_height),(0,0,0),1)
-cv2.rectangle(img_after_distance,(sign_2_top_left_x,sign_2_top_left_y),(sign_2_top_left_x+sign_2_width,sign_2_top_left_y+sign_2_height),(0,0,0),1)
-
-#mark centers of signs
-cv2.circle(img_before_distance,location_sign_before_distance,3,(255,0,0),4)
-cv2.circle(img_after_distance,location_sign_after_distance,3,(255,0,0),4)
-cv2.circle(img_after_distance,image_center,3,(255,0,0),4,-1)
-
-#image center to sign center
-cv2.line(img_before_distance,image_center,location_sign_before_distance,(0,0,0),5,-1)
-cv2.line(img_after_distance,image_center,location_sign_after_distance,(0,0,0),5,-1)
-
-
-#display images resize
-img_before_distance=cv2.resize(img_before_distance,(500,500))
-img_after_distance=cv2.resize(img_after_distance,(500,500))
-
-cv2.imshow('image_before_distance', img_before_distance)
-cv2.imshow('image_after_distance', img_after_distance)
-
-cv2.waitKey(0)
-
-#destroy all windoes
-cv2.destroyAllWindows()
+def distance_two_points_along_x(A,B):
+    return A[0]-B[0]
+def distance_two_points_along_y(A,B):
+    return A[1]-B[1]
 
 
-#Calculations
-
-#distance_between_center_and_sign_along_x_before
-x1=image_center[0]-location_sign_before_distance[0] #in pixels
-#distance_between_center_and_sign_along_x_after
-x2=image_center[0]-location_sign_after_distance[0] #in pixels
-
-
-#calculate how far and how wide
-l = 5 * x1/(x2-x1) # 5 in meters x1pixels/x2-x1pixels --> answer in meters
-w = l * (x2)/f     # l in meters x2pixels/fpixels --->answer in meters  
+def trignometric_calculations(x1,x2,f):
+    
+    l = 5 * x1/(x2-x1) 
+    w = l * (x2)/f 
+    return (w,l)
 
 
-print("l in m",l)
-print("w in m",w)
+
+def camera_to_sign(camera_cordinates,distancs_tuple):
+     return (camera_cordinates[0]+distancs_tuple[0],camera_cordinates[1]+distancs_tuple[1])
 
 
-#comparision
-
-g_truth=(736465.7375,3750769.212)
-camera=(736497.1112,3750738.772)
-
-pred_1=(camera[0]+w,camera[1]+l)
-print(actual_distance)
-#compare results
-print("actual:",g_truth)
-print("pred1:",pred_1)
-print("x cordinate missing mark by: ",g_truth[0]-pred_1[0])
-print("y_cordinate missing mark by:", g_truth[1]-pred_1[1])
+def error_analysis(original_cordinate,predicted_cordinates):
+    print("---------------------------------------------------------")
+    print("Error analysis")
+    print("---------------------------------------------------------")
+    print("The Ground Truth position of the sign is as follow {} {}".format(original_cordinate[0],original_cordinate[1]))
+    print("The predicted outcome after calculation is as follow {} {}".format(predicted_cordinates[0],predicted_cordinates[1]))
+    
 
 
 
 
+def calculation_of_distances(image_file_name_before_distance,image_file_name_after_distance,f=2468.6668434782608,d=5,sign_annotations="i75_sign_annotations.csv",camera_cordinates=(736497.1112,3750738.772),g_truth=(736465.7375,3750769.212)):
+    #load image 
+    img_before_distance = cv2.imread(image_file_name_before_distance)
+    img_after_distance  = cv2.imread(image_file_name_after_distance)
+    
+    #clear distortions
+    img_before_distance = clear_distortions(img_before_distance)
+    img_after_distance  = clear_distortions(img_after_distance)
+    
+    #calculate image center and dimensions
+    image_height,image_width,_=img_before_distance.shape
+    image_center = (int(image_width/2),int(image_height/2))
+
+    #parse annotations for details
+    sign_before_distance = parsing_annotations(sign_annotations,image_file_name_before_distance)
+    sign_after_distance  = parsing_annotations(sign_annotations,image_file_name_after_distance)
+
+    #Find center of sign
+    center_before_distance = find_center_of_sign(sign_before_distance)
+    center_after_distance  = find_center_of_sign(sign_after_distance)
+
+    #distance between center and sign
+    x1=distance_two_points_along_x(center_before_distance,image_center)
+    x2=distance_two_points_along_x(center_after_distance,image_center)
+    distance_tuple=trignometric_calculations(x1,x2,f)
+    final_positions = camera_to_sign(camera_cordinates,distance_tuple)
+    error_analysis(g_truth,final_positions)
+    return final_positions
 
 
 
 
+positions = calculation_of_distances('0002878.jpg','0002879.jpg')
 
