@@ -8,9 +8,10 @@ def draw_circle(event,x,y,flags,param):
     if event == cv2.EVENT_LBUTTONDBLCLK:
         cv2.circle(img,(x,y),3,(255,0,0),-1)
         ix,iy = x,y
+        print(ix,iy)
 
 # Create a black image, a window and bind the function to window
-img = cv2.imread('0002878.jpg')
+img = cv2.imread('0002879.jpg')
 cv2.namedWindow('image')
 cv2.setMouseCallback('image',draw_circle)
 

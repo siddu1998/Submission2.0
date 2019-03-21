@@ -89,6 +89,10 @@ def trignometric_calculations(x1,x2,f):
     
     l = 5 * x1/(x2-x1) 
     w = l * (x2)/f 
+    #w--> how right or how left the sign is (x-axis)
+    #l--> how ahead the sign is (y-axis)
+    print('how inclined:', w) #add to the x-cordinate
+    print('how ahead:', l) #add to the y-cordinate
     return (w,l)
 
 

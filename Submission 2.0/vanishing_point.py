@@ -66,15 +66,16 @@ plt.show()
 #bl,tl,tr,br
 #source_points=np.float32([ [0, height],[659,715],[753,709],[width, height]  ])
 source_points=np.float32([ [620, 780],[637,734],[789,728],[813, 766]  ])
-#destination_points = np.float32([ [0, 600], [0, 0], [600, 0], [600, 600] ])
-destination_points = np.float32([ [0, 2048], [0, 0], [2248, 0], [2248, 2048] ])
+destination_points = np.float32([ [0, 600], [0, 0], [600, 0], [600, 600] ])
+#destination_points = np.float32([ [0, 2048], [0, 0], [2248, 0], [2248, 2048] ])
 print(type(destination_points))
 
 matrix = cv2.getPerspectiveTransform(source_points, destination_points)
-result = cv2.warpPerspective(cropped_image, matrix, (2248, 2048))
+result = cv2.warpPerspective(cropped_image, matrix, (600,600))
 
 
 plt.figure()
 plt.imshow(result)
 plt.show()
+cv2.imwrite("birdie.jpg",result)
 
