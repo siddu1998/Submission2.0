@@ -22,12 +22,10 @@ def click_and_crop(event, x, y, flags, param):
                 cv2.waitKey(0)
 
 
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", required=True, help="Path to the image")
-args = vars(ap.parse_args())
  
-image = cv2.imread(args["image"])
+image = cv2.imread('0017761.jpg')
 cv2.imshow("image", image)
 cv2.namedWindow("image")
 cv2.setMouseCallback("image", click_and_crop,image)
+cv2.waitKey(0)
 cv2.destroyAllWindows()

@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 
 
-
 def draw_boxes_and_points(image,sign_cordinates):
     #tl
     cv2.circle(image,(sign_cordinates[0],sign_cordinates[1]),3,(255,255,255),-1)
@@ -69,10 +68,10 @@ def find_center_of_sign(sign_details_list):
 
 
 def finding_relative_location_of_image(center_sign):
-    if center_sign[0]<1024:
+    if center_sign[0]<1124:
         print("sign is to the left of the vehicle")
         return -1
-    elif center_sign[0]>1024:
+    elif center_sign[0]>1124:
         print("sign is to the right of the vehicle")
         return 1
     else:
@@ -93,6 +92,7 @@ def trignometric_calculations(x1,x2,f):
     #l--> how ahead the sign is (y-axis)
     print('how inclined:', w) #add to the x-cordinate
     print('how ahead:', l) #add to the y-cordinate
+
     return (w,l)
 
 
@@ -105,10 +105,15 @@ def parsing_camrea_annotations(image,camera_annotations):
             camera_cordinates_y=row['y']
     return (camera_cordinates_x,camera_cordinates_y)
             
-def camera_to_sign(camera_cordinates,distancs_tuple):
-     return (camera_cordinates[0]+distancs_tuple[0],camera_cordinates[1]+distancs_tuple[1])
+def camera_to_sign(camera_cordinates,distancs_tuple,right_or_left):
+    #if sign is to the right
+    if right_or_left==1:
+        return (camera_cordinates[0]-distancs_tuple[0],camera_cordinates[1]+distancs_tuple[1])
+    #id sign is to the left
+    elif right_or_left==-1:
+        return (camera_cordinates[0]+distancs_tuple[0],camera_cordinates[1]+distancs_tuple[1])
 
-
+    
 def error_analysis(predicted_cordinates):
 
 
@@ -146,7 +151,8 @@ def calculation_of_distances(image_file_name_before_distance,image_file_name_aft
     
     
     camera_cordinates=parsing_camrea_annotations(image_file_name_after_distance,camera_annotations)
-    final_positions = camera_to_sign(camera_cordinates,distance_tuple)
+    right_or_left = finding_relative_location_of_image(center_after_distance)
+    final_positions = camera_to_sign(camera_cordinates,distance_tuple,right_or_left)
 
     error_analysis(final_positions)
     return final_positions
