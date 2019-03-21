@@ -35,6 +35,7 @@ def select_image():
             result_to_display_x.pack(padx=5, pady=10, side='left') 
         
 
+
             result_to_display_y =tk.Label(root,text='Y Predicted:{}'.format(result[1]))
             result_to_display_y.pack(padx=5, pady=20, side='left') 
 
