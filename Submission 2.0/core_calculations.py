@@ -95,6 +95,7 @@ def trignometric_calculations(x1,x2,f,camera_cordinates_1,camera_cordinates_2):
     #l--> how ahead the sign is (y-axis)
     print('how inclined:', w) #add to the x-cordinate
     print('how ahead:', l) #add to the y-cordinate
+    
 
     return (w,l)
 
