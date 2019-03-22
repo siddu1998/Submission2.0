@@ -86,9 +86,10 @@ def distance_two_points_along_y(A,B):
     return A[1]-B[1]
 
 
-def trignometric_calculations(x1,x2,f):
-    
-    l = 5 * x1/(x2-x1) 
+def trignometric_calculations(x1,x2,f,camera_cordinates_1,camera_cordinates_2):
+    dst= get_distance_between_two_consecutive_images(camera_cordinates_1,camera_cordinates_2)   
+    print(dst) 
+    l =  dst * x1/(x2-x1) 
     w = l * (x2)/f 
     #w--> how right or how left the sign is (x-axis)
     #l--> how ahead the sign is (y-axis)
@@ -125,7 +126,7 @@ def error_analysis(predicted_cordinates):
     print("The predicted outcome after calculation is as follow {} {}".format(predicted_cordinates[0],predicted_cordinates[1]))
     
 
-def calculation_of_distances(image_file_name_before_distance,image_file_name_after_distance,sign_annotations,camera_annotations,f=2468.6668434782608,d=5):
+def calculation_of_distances(image_file_name_before_distance,image_file_name_after_distance,sign_annotations,camera_annotations,f=2468.6668434782608):
     #load image     
     img_before_distance = cv2.imread(image_file_name_before_distance)
     img_after_distance  = cv2.imread(image_file_name_after_distance)
@@ -149,10 +150,15 @@ def calculation_of_distances(image_file_name_before_distance,image_file_name_aft
     #distance between center and sign
     x1=distance_two_points_along_x(center_before_distance,image_center)
     x2=distance_two_points_along_x(center_after_distance,image_center)
-    distance_tuple=trignometric_calculations(x1,x2,f)
+    
     
     
     camera_cordinates=parsing_camrea_annotations(image_file_name_after_distance,camera_annotations)
+    camera_cordinates_image_1=parsing_camrea_annotations(image_file_name_before_distance,camera_annotations)
+    
+    distance_tuple=trignometric_calculations(x1,x2,f,camera_cordinates_image_1,camera_cordinates)
+
+
     right_or_left = finding_relative_location_of_image(center_after_distance)
     final_positions = camera_to_sign(camera_cordinates,distance_tuple,right_or_left)
 
