@@ -1,5 +1,4 @@
 import math
-
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
@@ -58,7 +57,7 @@ def parsing_annotations(highway_sign_annotations,image_file_name):
             sign_height=row['height']
             class_of_sign=['class']
 
-    return [sign_top_left_x,sign_top_left_y,sign_width,sign_height]
+    return [sign_top_left_x,sign_top_left_y,sign_width,sign_height,class_of_sign]
 
 
 def find_center_of_sign(sign_details_list):
@@ -119,8 +118,6 @@ def camera_to_sign(camera_cordinates,distancs_tuple,right_or_left):
 
     
 def error_analysis(predicted_cordinates):
-
-
     print("---------------------------------------------------------")
     print("Error analysis")
     print("---------------------------------------------------------")
