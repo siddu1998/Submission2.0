@@ -56,6 +56,7 @@ def parsing_annotations(highway_sign_annotations,image_file_name):
             sign_top_left_y=row['top_y']
             sign_width=row['width']
             sign_height=row['height']
+            class_of_sign=['class']
 
     return [sign_top_left_x,sign_top_left_y,sign_width,sign_height]
 
@@ -130,39 +131,36 @@ def calculation_of_distances(image_file_name_before_distance,image_file_name_aft
     #load image     
     img_before_distance = cv2.imread(image_file_name_before_distance)
     img_after_distance  = cv2.imread(image_file_name_after_distance)
-    
     #clear distortions
     img_before_distance = clear_distortions(img_before_distance)
     img_after_distance  = clear_distortions(img_after_distance)
-    
     #calculate image center and dimensions
     image_height,image_width,_=img_before_distance.shape
     image_center = (int(image_width/2),int(image_height/2))
-
     #parse annotations for details
     sign_before_distance = parsing_annotations(sign_annotations,image_file_name_before_distance)
     sign_after_distance  = parsing_annotations(sign_annotations,image_file_name_after_distance)
-    #Find center of sign
-    center_before_distance = find_center_of_sign(sign_before_distance)
-    center_after_distance  = find_center_of_sign(sign_after_distance)
- 
-
-    #distance between center and sign
-    x1=distance_two_points_along_x(center_before_distance,image_center)
-    x2=distance_two_points_along_x(center_after_distance,image_center)
-    
-    
-    
-    camera_cordinates=parsing_camrea_annotations(image_file_name_after_distance,camera_annotations)
-    camera_cordinates_image_1=parsing_camrea_annotations(image_file_name_before_distance,camera_annotations)
-    
-    distance_tuple=trignometric_calculations(x1,x2,f,camera_cordinates_image_1,camera_cordinates)
-
-
-    right_or_left = finding_relative_location_of_image(center_after_distance)
-    final_positions = camera_to_sign(camera_cordinates,distance_tuple,right_or_left)
-
-    error_analysis(final_positions)
-    return final_positions
+    #if we are dealing with the same image proceed as else inform and kill 
+    if sign_after_distance[4]==sign_before_distance[4]:
+        #Find center of sign
+        center_before_distance = find_center_of_sign(sign_before_distance)
+        center_after_distance  = find_center_of_sign(sign_after_distance)
+        #distance between center and sign
+        x1=distance_two_points_along_x(center_before_distance,image_center)
+        x2=distance_two_points_along_x(center_after_distance,image_center)
+        #getting camera_cordinates_to_calculate distance between images
+        camera_cordinates=parsing_camrea_annotations(image_file_name_after_distance,camera_annotations)
+        camera_cordinates_image_1=parsing_camrea_annotations(image_file_name_before_distance,camera_annotations)
+        #getting distances from camera
+        distance_tuple=trignometric_calculations(x1,x2,f,camera_cordinates_image_1,camera_cordinates)
+        #understanding spatial location
+        right_or_left = finding_relative_location_of_image(center_after_distance)
+        #adding and subtracting images 
+        final_positions = camera_to_sign(camera_cordinates,distance_tuple,right_or_left)
+        error_analysis(final_positions)
+        return final_positions
+    else:
+        print('Sorry, We could not find the same sign on both the images')
+        return (0,0)
 
 
