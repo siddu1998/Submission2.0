@@ -30,7 +30,7 @@ def select_image():
         image_after_distance=ImageTk.PhotoImage(image_after_distance)
         
         if panelA is None or panelB is None:
-            result=(calculation_of_distances(path_a[-11:],path_b[-11:],"i75_sign_annotations.csv","i75_camera_cordinates.csv"))
+            result=(calculation_of_distances(path_a[-11:],path_b[-11:],"i285_sign_annotations.csv","i285_camera_cordinates.csv"))
             result_to_display_x =tk.Label(root,text="X predicted:{}".format(result[0]))
             result_to_display_x.pack(padx=5, pady=10, side='left') 
         
@@ -71,7 +71,7 @@ root = tk.Tk()
 panelA=None
 panelB=None
 
-btn_for_pothole=tk.Button(root,text="Pothole Area Calculation on i25",command=select_pothole_image)
+btn_for_pothole=tk.Button(root,text="Pothole Area Calculation on i25",command=select_image)
 btn_for_pothole.pack(side="bottom", fill="both", padx="10", pady="10")
 
 image = tk.PhotoImage(file="logo.png")

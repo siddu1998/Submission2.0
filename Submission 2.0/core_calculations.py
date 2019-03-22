@@ -4,8 +4,10 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from scipy.spatial import distance
 
-
+def get_distance_between_two_consecutive_images(cordinate_1,cordinate_2):
+    return distance.euclidean(cordinate_1,cordinate_2)
 def draw_boxes_and_points(image,sign_cordinates):
     #tl
     cv2.circle(image,(sign_cordinates[0],sign_cordinates[1]),3,(255,255,255),-1)
