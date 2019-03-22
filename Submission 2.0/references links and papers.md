@@ -14,6 +14,8 @@ http://answers.opencv.org/question/139166/focal-length-from-calibration-paramete
 
 https://photo.stackexchange.com/questions/12434/how-do-i-calculate-the-distance-of-an-object-in-a-photo
 
+https://github.com/raulmur/ORB_SLAM2/issues/411
+
 ### Blogs and Articles 
 https://towardsdatascience.com/vehicle-detection-and-distance-estimation-7acde48256e1
 https://www.scantips.com/lights/subjectdistance.html
