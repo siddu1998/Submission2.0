@@ -69,11 +69,11 @@ def find_center_of_sign(sign_details_list):
     return location_sign
 
 
-def finding_relative_location_of_image(center_sign):
-    if center_sign[0]<1124:
+def finding_relative_location_of_image(center_sign,image_width):
+    if center_sign[0]<image_width/2:
         print("sign is to the left of the vehicle")
         return -1
-    elif center_sign[0]>1124:
+    elif center_sign[0]>image_width/2:
         print("sign is to the right of the vehicle")
         return 1
     else:
@@ -152,7 +152,7 @@ def calculation_of_distances(image_file_name_before_distance,image_file_name_aft
         #getting distances from camera
         distance_tuple=trignometric_calculations(x1,x2,f,camera_cordinates_image_1,camera_cordinates)
         #understanding spatial location
-        right_or_left = finding_relative_location_of_image(center_after_distance)
+        right_or_left = finding_relative_location_of_image(center_after_distance,image_width)
         #adding and subtracting images 
         final_positions = camera_to_sign(camera_cordinates,distance_tuple,right_or_left)
         error_analysis(final_positions)
@@ -161,4 +161,27 @@ def calculation_of_distances(image_file_name_before_distance,image_file_name_aft
         print('Sorry, We could not find the same sign on both the images')
         return (0,0)
 
-
+def calculation_of_distances_from_user_points(image_file_name_1,image_file_name_2,points_1,points_2,camera_annotations,f=2468.6668434782608):
+    #load image     
+    img_before_distance = cv2.imread(image_file_name_1)
+    img_after_distance  = cv2.imread(image_file_name_2)
+    #clear distortions
+    img_before_distance = clear_distortions(img_before_distance)
+    img_after_distance  = clear_distortions(img_after_distance)
+    #calculate image center and dimensions
+    image_height,image_width,_=img_before_distance.shape
+    image_center = (int(image_width/2),int(image_height/2))
+    #distance between image center and user cordinates
+    x1=distance_two_points_along_x(points_1,image_center)
+    x2=distance_two_points_along_x(points_2,image_center)
+    #getting cameras cordinates
+    camera_cordinates=parsing_camrea_annotations(image_file_name_1,camera_annotations)
+    camera_cordinates_image_1=parsing_camrea_annotations(image_file_name_2,camera_annotations)
+    #how far and how wide
+    distance_tuple=trignometric_calculations(x1,x2,f,camera_cordinates_image_1,camera_cordinates)
+    #understanding spatial location
+    right_or_left = finding_relative_location_of_image(points_2,image_width)
+    #adding and subtracting images 
+    final_positions = camera_to_sign(camera_cordinates,distance_tuple,right_or_left)
+    error_analysis(final_positions)
+    return final_positions
