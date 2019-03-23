@@ -7,10 +7,6 @@ from core_calculations import *
 
 
 
-
-
-
-
 def select_image():
     global panelA,panelB
     path_a = filedialog.askopenfilename()

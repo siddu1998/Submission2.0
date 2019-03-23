@@ -7,6 +7,7 @@ from scipy.spatial import distance
 
 def get_distance_between_two_consecutive_images(cordinate_1,cordinate_2):
     return distance.euclidean(cordinate_1,cordinate_2)
+
 def draw_boxes_and_points(image,sign_cordinates):
     #tl
     cv2.circle(image,(sign_cordinates[0],sign_cordinates[1]),3,(255,255,255),-1)
@@ -23,10 +24,28 @@ def draw_boxes_and_points(image,sign_cordinates):
             (sign_cordinates[0],sign_cordinates[1]+sign_cordinates[3])]
     return image,points
 
+Camera.fx: 1203.032354
+Camera.fy: 1284.609285
+Camera.cx: 720.0
+Camera.cy: 540.0
+
+
+Camera.fx: 2468.6668434782608
+Camera.fy: 2468.6668434782608
+Camera.cx: 1228.876620888020
+Camera.cy: 1012.976060035710
+
+Camera.k1: 0.00125859
+Camera.k2: 0
+Camera.p1: -0.00010658
+Camera.p2: 0
+
 def clear_distortions(img_before_distance):
     #distortion matrics
-    mtx=[[2468.6668434782608,0,1228.876620888020],[0,2468.6668434782608,1012.976060035710],[0,0,1]] 
-    dist=[ 0.00125859 , 0 ,  -0.00010658,0 ]
+    mtx=[[1203.032354,0,720.0],[0,1284.609285,540.0],[0,0,1]]
+    #mtx=[[2468.6668434782608,0,1228.876620888020],[0,2468.6668434782608,1012.976060035710],[0,0,1]] 
+    #dist=[ 0.00125859 , 0 ,  -0.00010658,0 ]
+    dist=[ 0,0,0,0 ]
     #converting into numpy
     mtx = np.array(mtx)
     dist=np.array(dist)
