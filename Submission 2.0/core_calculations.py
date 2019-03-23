@@ -24,22 +24,6 @@ def draw_boxes_and_points(image,sign_cordinates):
             (sign_cordinates[0],sign_cordinates[1]+sign_cordinates[3])]
     return image,points
 
-Camera.fx: 1203.032354
-Camera.fy: 1284.609285
-Camera.cx: 720.0
-Camera.cy: 540.0
-
-
-Camera.fx: 2468.6668434782608
-Camera.fy: 2468.6668434782608
-Camera.cx: 1228.876620888020
-Camera.cy: 1012.976060035710
-
-Camera.k1: 0.00125859
-Camera.k2: 0
-Camera.p1: -0.00010658
-Camera.p2: 0
-
 def clear_distortions(img_before_distance):
     #distortion matrics
     mtx=[[1203.032354,0,720.0],[0,1284.609285,540.0],[0,0,1]]
@@ -90,13 +74,13 @@ def find_center_of_sign(sign_details_list):
 
 def finding_relative_location_of_image(center_sign,image_width):
     if center_sign[0]<image_width/2:
-        print("sign is to the left of the vehicle")
+        #print("sign is to the left of the vehicle")
         return -1
     elif center_sign[0]>image_width/2:
-        print("sign is to the right of the vehicle")
+        #print("sign is to the right of the vehicle")
         return 1
     else:
-        print("sign is alligned with the optical axis")
+        #print("sign is alligned with the optical axis")
         return 0
 
 def distance_two_points_along_x(A,B):
@@ -107,13 +91,13 @@ def distance_two_points_along_y(A,B):
 
 def trignometric_calculations(x1,x2,f,camera_cordinates_1,camera_cordinates_2):
     dst= get_distance_between_two_consecutive_images(camera_cordinates_1,camera_cordinates_2)   
-    print(dst) 
+    #print('The images are taken at a distance of {} m '.format(dst)) 
     l =  dst * x1/(x2-x1) 
     w = l * (x2)/f 
     #w--> how right or how left the sign is (x-axis)
     #l--> how ahead the sign is (y-axis)
-    print('how inclined:', w) #add to the x-cordinate
-    print('how ahead:', l) #add to the y-cordinate
+    #print('how inclined:', w) #add to the x-cordinate
+    #print('how ahead:', l) #add to the y-cordinate
     
 
     return (w,l)
@@ -121,7 +105,7 @@ def trignometric_calculations(x1,x2,f,camera_cordinates_1,camera_cordinates_2):
 
 def parsing_camrea_annotations(image,camera_annotations):
     camera_annotations=pd.read_csv(camera_annotations)
-    print(image)
+    #print(image)
     for index,row in camera_annotations.iterrows():
         if row["image_name"]==image:
             camera_cordinates_x=row['x']
@@ -137,15 +121,16 @@ def camera_to_sign(camera_cordinates,distancs_tuple,right_or_left):
         return (camera_cordinates[0]+distancs_tuple[0],camera_cordinates[1]+distancs_tuple[1])
 
     
-def error_analysis(predicted_cordinates):
-    print("---------------------------------------------------------")
-    print("Error analysis")
-    print("---------------------------------------------------------")
-    print("The predicted outcome after calculation is as follow {} {}".format(predicted_cordinates[0],predicted_cordinates[1]))
+#def error_analysis(predicted_cordinates):
+    #print("---------------------------------------------------------")
+    #print("Error analysis")
+    #print("---------------------------------------------------------")
+    #print("The predicted outcome after calculation is as follow {} {}".format(predicted_cordinates[0],predicted_cordinates[1]))
     
 
-def calculation_of_distances(image_file_name_before_distance,image_file_name_after_distance,sign_annotations,camera_annotations,f=2468.6668434782608):
+def calculation_of_distances(image_file_name_before_distance,image_file_name_after_distance,sign_annotations,camera_annotations,f=1203.032354):
     #load image     
+    #print(image_file_name_before_distance,image_file_name_after_distance)
     img_before_distance = cv2.imread(image_file_name_before_distance)
     img_after_distance  = cv2.imread(image_file_name_after_distance)
     #clear distortions
@@ -174,10 +159,10 @@ def calculation_of_distances(image_file_name_before_distance,image_file_name_aft
         right_or_left = finding_relative_location_of_image(center_after_distance,image_width)
         #adding and subtracting images 
         final_positions = camera_to_sign(camera_cordinates,distance_tuple,right_or_left)
-        error_analysis(final_positions)
+        #error_analysis(final_positions)
         return final_positions
     else:
-        print('Sorry, We could not find the same sign on both the images')
+        #print('Sorry, We could not find the same sign on both the images')
         return (0,0)
 
 def calculation_of_distances_from_user_points(image_file_name_1,image_file_name_2,points_1,points_2,camera_annotations,f=2468.6668434782608):

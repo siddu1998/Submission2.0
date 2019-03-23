@@ -10,9 +10,8 @@ from core_calculations import *
 def select_image():
     global panelA,panelB
     path_a = filedialog.askopenfilename()
-    print(path_a[-11:])
     path_b = filedialog.askopenfilename()
-    print(path_b[-11:])
+    print(path_a[-11:],path_b[-11:])
     if len(path_a)>0 and len(path_b)>0:
         image_before_distance=cv2.imread(path_a)
         image_after_distance=cv2.imread(path_b)
@@ -26,7 +25,7 @@ def select_image():
         image_after_distance=ImageTk.PhotoImage(image_after_distance)
         
         if panelA is None or panelB is None:
-            result=(calculation_of_distances(path_a[-11:],path_b[-11:],"i_sign_annotations.csv","i_camera_cordinates.csv"))
+            result=(calculation_of_distances(path_a[-11:],path_b[-11:],"0_sign_annotations.csv","0_camera_cordinates.csv"))
             result_to_display_x =tk.Label(root,text="X predicted:{}".format(result[0]))
             result_to_display_x.pack(padx=5, pady=10, side='left') 
         
@@ -47,7 +46,7 @@ def select_image():
         
             
     else:
-        result=(calculation_of_distances(path_a[-11:],path_b[-11:],"i285_sign_annotations.csv","i285_camera_cordinates.csv"))
+        result=(calculation_of_distances(path_a[-11:],path_b[-11:],"0_sign_annotations.csv","0_camera_cordinates.csv"))
         result_to_display_x =tk.Label(root,text="X predicted:{}".format(result[0]))
         result_to_display_x.pack(padx=5, pady=10, side='left') 
 
