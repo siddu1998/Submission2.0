@@ -4,6 +4,12 @@ from PIL import ImageTk
 import cv2
 from tkinter import filedialog
 from core_calculations import *
+import argparse
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-r", "--road", help = "Expressway name")
+args = vars(ap.parse_args())
+
 
 
 
@@ -25,7 +31,7 @@ def select_image():
         image_after_distance=ImageTk.PhotoImage(image_after_distance)
         
         if panelA is None or panelB is None:
-            result=(calculation_of_distances(path_a[-11:],path_b[-11:],"0_sign_annotations.csv","0_camera_cordinates.csv"))
+            result=(calculation_of_distances(path_a[-11:],path_b[-11:],"{}_sign_annotations.csv".format(args['road']),"{}_camera_cordinates.csv".format(args['road'])))
             result_to_display_x =tk.Label(root,text="X predicted:{}".format(result[0]))
             result_to_display_x.pack(padx=5, pady=10, side='left') 
         
