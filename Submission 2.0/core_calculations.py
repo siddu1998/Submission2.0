@@ -92,8 +92,12 @@ def distance_two_points_along_y(A,B):
 def trignometric_calculations(x1,x2,f,camera_cordinates_1,camera_cordinates_2):
     dst= get_distance_between_two_consecutive_images(camera_cordinates_1,camera_cordinates_2)   
     #print('The images are taken at a distance of {} m '.format(dst)) 
-    l =  dst * x1/(x2-x1) 
-    w = l * (x2)/f 
+    if(x2-x1)!=0:
+        l =  dst * x1/(x2-x1) 
+        w = l * (x2)/f 
+    elif (x2-x1)==0:
+        l=dst * x1
+        w=l*(x2)/f
     #w--> how right or how left the sign is (x-axis)
     #l--> how ahead the sign is (y-axis)
     #print('how inclined:', w) #add to the x-cordinate
@@ -187,5 +191,5 @@ def calculation_of_distances_from_user_points(image_file_name_1,image_file_name_
     right_or_left = finding_relative_location_of_image(points_2,image_width)
     #adding and subtracting images 
     final_positions = camera_to_sign(camera_cordinates,distance_tuple,right_or_left)
-    error_analysis(final_positions)
+    #error_analysis(final_positions)
     return final_positions
