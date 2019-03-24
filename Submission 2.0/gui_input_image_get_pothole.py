@@ -64,6 +64,7 @@ def show_entry_fields():
     
     matrix = cv2.getPerspectiveTransform(source_points, destination_points)
     result = cv2.warpPerspective(image, matrix, (600,600))
+    result_image_y,result_image_x,_=result.shape
     cv2.imwrite('birdie.jpg',result)
     result=Image.fromarray(result)
     result=result.resize((250, 250), Image.ANTIALIAS)
@@ -81,7 +82,7 @@ def show_entry_fields():
 
     pothole_y_pixels,pothole_x_pixels,_=pothole.shape
     print(pothole_y_pixels,pothole_x_pixels)
-    pix_per_meter_x = 600/3.5
+    pix_per_meter_x = result_image_x/3.5
     pix_per_meter_y = pix_per_meter_x * np.linalg.norm(Lh[:,0]) / np.linalg.norm(Lh[:,1])
     print(pix_per_meter_x, pix_per_meter_y)
 
