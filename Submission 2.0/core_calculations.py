@@ -123,7 +123,7 @@ def camera_to_sign(camera_cordinates,distancs_tuple,right_or_left):
     return (camera_cordinates[0]+distancs_tuple[0],camera_cordinates[1]+distancs_tuple[1])
 
     
-#def error_analysis(predicted_cordinates):
+def error_analysis(predicted_cordinates):
     print("---------------------------------------------------------")
     print("Error analysis")
     print("---------------------------------------------------------")
@@ -136,8 +136,8 @@ def calculation_of_distances(image_file_name_before_distance,image_file_name_aft
     img_before_distance = cv2.imread(image_file_name_before_distance)
     img_after_distance  = cv2.imread(image_file_name_after_distance)
     #clear distortions
-    img_before_distance = clear_distortions(img_before_distance)
-    img_after_distance  = clear_distortions(img_after_distance)
+    #img_before_distance = clear_distortions(img_before_distance)
+    #img_after_distance  = clear_distortions(img_after_distance)
     #calculate image center and dimensions
     image_height,image_width,_=img_before_distance.shape
     image_center = (int(image_width/2),int(image_height/2))
@@ -189,5 +189,6 @@ def calculation_of_distances_from_user_points(image_file_name_1,image_file_name_
     right_or_left = finding_relative_location_of_image(points_2,image_width)
     #adding and subtracting images 
     final_positions = camera_to_sign(camera_cordinates,distance_tuple,right_or_left)
-    #error_analysis(final_positions)
+    error_analysis(final_positions)
+    
     return final_positions

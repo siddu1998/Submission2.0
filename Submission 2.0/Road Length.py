@@ -70,7 +70,7 @@ cv2.circle(image,(154,2024),4,(255,255,0),-1)
 cv2.circle(image,(1151,317),4,(255,255,0),-1)
 cv2.circle(image,(1362,328),4,(255,255,0),-1)
 cv2.circle(image,(2237,2013),4,(255,255,0),-1)
-
+cv2.imshow('check',image)
 destination_points = np.float32([ [0,1700], [0, 0], [230, 0], [230, 1700] ])
 #destination_points = np.float32([ [0, 2048], [0, 0], [2248, 0], [2248, 2048] ])
 print(type(destination_points))
@@ -86,8 +86,10 @@ cv2.imwrite("birdie.jpg",result)
 mtx=[[2468.6668434782608,0,1228.876620888020],[0,2468.6668434782608,1012.976060035710],[0,0,1]] 
 dist=[ 0.00125859 , 0 ,  -0.00010658,0 ]
 
-
+ppx=300/3.6
 Lh = np.linalg.inv(np.matmul(matrix, mtx))
-pix_per_meter_y = 83 * np.linalg.norm(Lh[:,0]) / np.linalg.norm(Lh[:,1])
-print(83, pix_per_meter_y)
+pix_per_meter_y = ppx * np.linalg.norm(Lh[:,0]) / np.linalg.norm(Lh[:,1])
+print(ppx, pix_per_meter_y)
+length=1700/pix_per_meter_y
+print(length)
 

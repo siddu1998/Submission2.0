@@ -36,8 +36,10 @@ def select_image():
         if panelA is None or panelB is None:
             result=(calculation_of_distances(path_a[-11:],path_b[-11:],"{}_sign_annotations.csv".format(args['road']),"{}_camera_cordinates.csv".format(args['road'])))
             lat_and_log = utm.to_latlon(int(result[0]),int(result[1]), 16, 'N')
+            print(lat_and_log)
             result_to_display_x =tk.Label(root,text="X predicted:{} lat: {}".format(result[0],lat_and_log[0]))
             result_to_display_x.pack(padx=5, pady=10, side='left') 
+            print(result)
         
             result_to_display_y =tk.Label(root,text='Y Predicted:{} lat: {}'.format(result[1],lat_and_log[1]))
             result_to_display_y.pack(padx=5, pady=20, side='left') 
@@ -61,6 +63,7 @@ def select_image():
 
         result_to_display_y =tk.Label(root,text='Y predicted:{}'.format(result[1]))
         result_to_display_y.pack(padx=5, pady=20, side='left') 
+        
 
         panelA.configure(image=image_before_distance)
         panelB.configure(image=image_after_distance)
