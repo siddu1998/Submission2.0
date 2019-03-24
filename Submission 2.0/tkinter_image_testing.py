@@ -10,6 +10,29 @@ from PIL import Image
 from PIL import ImageTk
 
 
+refPt = []
+cropping = False
+
+def click_and_crop(event, x, y, flags, param):
+        global refPt, cropping
+        if event == cv2.EVENT_LBUTTONDOWN:
+                refPt = [(x, y)]
+                cropping = True
+        
+        elif event == cv2.EVENT_LBUTTONUP:
+                refPt.append((x, y))
+                cropping = False  
+                cv2.rectangle(param, refPt[0], refPt[1], (0, 255, 0), 2)
+                cv2.imshow("cropped", param)
+                
+                clone = param.copy()
+                roi = clone[refPt[0][1]:refPt[1][1], refPt[0][0]:refPt[1][0]]
+                cv2.imshow("ROI", roi)
+                cv2.imwrite('marking.jpg',roi)
+                cv2.waitKey(0)
+    
+
+
 def show_entry_fields():
     global panelA
     global path_a
@@ -36,13 +59,34 @@ def show_entry_fields():
 
     source_points=np.float32([ [bl_x,bl_y],[tl_x,tl_y],[tr_x,tr_y],[br_x,br_y]  ])
     destination_points = np.float32([ [0, 600], [0, 0], [600, 0], [600, 600] ])
+
     image=cv2.imread(path_a)
     
     matrix = cv2.getPerspectiveTransform(source_points, destination_points)
     result = cv2.warpPerspective(image, matrix, (600,600))
+    cv2.imwrite('birdie.jpg',result)
     result=Image.fromarray(result)
     result=result.resize((250, 250), Image.ANTIALIAS)
     result=ImageTk.PhotoImage(result)
+    mtx=[[1203.032354,0,720.0],[0,1284.609285,540.0],[0,0,1]]
+    dist=[ 0,0,0,0 ]
+    Lh = np.linalg.inv(np.matmul(matrix, mtx))
+    pix_per_meter_y = 171 * np.linalg.norm(Lh[:,0]) / np.linalg.norm(Lh[:,1])
+    print(171, pix_per_meter_y)
+    bird = cv2.imread('birdie.jpg')
+    cv2.imshow("image", bird)
+    cv2.namedWindow("image")
+    cv2.setMouseCallback("image", click_and_crop,bird)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    pothole=cv2.imread('marking.jpg')
+    pothole_y_pixels,pothole_x_pixels,_=pothole.shape
+    print(pothole_y_pixels)
+    print(pothole_x_pixels)
+    print('height {}m'.format(pothole_y_pixels/pix_per_meter_y))
+    print('length {}m'.format(pothole_x_pixels/171))
+
+
 
     if panelA is None:
             panelA=Label(image=result)
@@ -101,6 +145,7 @@ image = mpimg.imread(path_a)
 plt.figure()
 plt.imshow(image)
 plt.show()
+
 
 
 

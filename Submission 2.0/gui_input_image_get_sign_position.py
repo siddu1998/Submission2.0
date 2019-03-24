@@ -5,10 +5,13 @@ import cv2
 from tkinter import filedialog
 from core_calculations import *
 import argparse
+import utm
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-r", "--road", help = "Expressway name")
+
 args = vars(ap.parse_args())
+
 
 
 
@@ -32,14 +35,13 @@ def select_image():
         
         if panelA is None or panelB is None:
             result=(calculation_of_distances(path_a[-11:],path_b[-11:],"{}_sign_annotations.csv".format(args['road']),"{}_camera_cordinates.csv".format(args['road'])))
-            result_to_display_x =tk.Label(root,text="X predicted:{}".format(result[0]))
+            lat_and_log = utm.to_latlon(int(result[0]),int(result[1]), 16, 'N')
+            result_to_display_x =tk.Label(root,text="X predicted:{} lat: {}".format(result[0],lat_and_log[0]))
             result_to_display_x.pack(padx=5, pady=10, side='left') 
         
-
-
-            result_to_display_y =tk.Label(root,text='Y Predicted:{}'.format(result[1]))
+            result_to_display_y =tk.Label(root,text='Y Predicted:{} lat: {}'.format(result[1],lat_and_log[1]))
             result_to_display_y.pack(padx=5, pady=20, side='left') 
-
+            
             panelA=tk.Label(image=image_before_distance)
             panelA.image=image_before_distance
             panelA.pack(side="left",pady=15)
@@ -52,7 +54,7 @@ def select_image():
         
             
     else:
-        result=(calculation_of_distances(path_a[-11:],path_b[-11:],"0_sign_annotations.csv","0_camera_cordinates.csv"))
+        result=(calculation_of_distances(path_a[-11:],path_b[-11:],"{}_sign_annotations.csv".format(args['road']),"{}_camera_cordinates.csv".format(args['road'])))
         result_to_display_x =tk.Label(root,text="X predicted:{}".format(result[0]))
         result_to_display_x.pack(padx=5, pady=10, side='left') 
 
@@ -72,7 +74,7 @@ root = tk.Tk()
 panelA=None
 panelB=None
 
-btn_for_pothole=tk.Button(root,text="Pothole Area Calculation on Interstate",command=select_image)
+btn_for_pothole=tk.Button(root,text="Sign Distance Calculation on Interstate",command=select_image)
 btn_for_pothole.pack(side="bottom", fill="both", padx="10", pady="10")
 
 image = tk.PhotoImage(file="logo.png")

@@ -23,7 +23,8 @@ def click_and_crop(event, x, y, flags, param):
 
 
  
-image = cv2.imread('0017761.jpg')
+image = cv2.imread('0017781.jpg')
+image=cv2.resize(image,(800,800))
 cv2.imshow("image", image)
 cv2.namedWindow("image")
 cv2.setMouseCallback("image", click_and_crop,image)
