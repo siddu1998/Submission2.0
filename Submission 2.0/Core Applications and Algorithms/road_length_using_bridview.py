@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
-from birdseye import BirdsEye
 
 import numpy as np
 import cv2
