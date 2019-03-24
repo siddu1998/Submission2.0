@@ -71,8 +71,6 @@ def show_entry_fields():
     mtx=[[1203.032354,0,720.0],[0,1284.609285,540.0],[0,0,1]]
     dist=[ 0,0,0,0 ]
     Lh = np.linalg.inv(np.matmul(matrix, mtx))
-    pix_per_meter_y = 171 * np.linalg.norm(Lh[:,0]) / np.linalg.norm(Lh[:,1])
-    print(171, pix_per_meter_y)
     bird = cv2.imread('birdie.jpg')
     cv2.imshow("image", bird)
     cv2.namedWindow("image")
@@ -80,7 +78,13 @@ def show_entry_fields():
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     pothole=cv2.imread('marking.jpg')
+
     pothole_y_pixels,pothole_x_pixels,_=pothole.shape
+    print(pothole_y_pixels,pothole_x_pixels)
+    pix_per_meter_x = 600/3.5
+    pix_per_meter_y = pix_per_meter_x * np.linalg.norm(Lh[:,0]) / np.linalg.norm(Lh[:,1])
+    print(pix_per_meter_x, pix_per_meter_y)
+
     print(pothole_y_pixels)
     print(pothole_x_pixels)
     print('height {}m'.format(pothole_y_pixels/pix_per_meter_y))
