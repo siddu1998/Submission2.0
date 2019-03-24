@@ -12,7 +12,7 @@ Once you have the environment set up and you have cloned the repository, I have 
 
 
 Note: All applications work on python3
-To run the application whose task is as follows : "Develop a GUI where the user can select two images, which are at a specific distance and calculate the location of the sign, provided we know the image cordinates of it stored in the sign annotations file"
+To run the application whose task is as follows :<b> "Develop a GUI where the user can select two images, which are at a specific distance and calculate the location of the sign, provided we know the image cordinates of it stored in the sign annotations file"</b>
 
 ```
 python gui_input_image_get_position.py -r <<<expressway code>>>
@@ -27,14 +27,14 @@ python gui_input_image_get_position.py -r <<<expressway code>>>
 
 This command will prompt the user to select two images, and the rest algorithm outputs the performed calculations.
 
-To run the application whose task is as follows : "Develop a GUI application, where the user can select two images and then use his mouse to select to cordinates, after which the algorithm gets the required distances"
+To run the application whose task is as follows :<b> "Develop a GUI application, where the user can select two images and then use his mouse to select to cordinates, after which the algorithm gets the required distances"</b>
 ```
 python give_two_consecutive_images_and_user_points.py -im1  <<<test_image_1>>> -im2 <<<test_image_2>>> -r <<<expressway code>>>
 ```
 The arguments provided in the terminal will be test_images, To make it easier I have already placed a few images and their corresponding datasets in the repository, itself so any path kind of path issues, will be resolved. This application gives rise to two different GUI's where you can select the points on the image. Once you have finished selecting the points make sure you press 'ESC', to move out of the selection. The algorithm tracks your mouse cordinates and outputs the required cordinates.
 
 
-To run the application whose task is: "Develop an interface where user can select an image which has a pothole, pavement marking etc and then the output corresponds to the area of the pothole"
+To run the application whose task is: <b>"Develop an interface where user can select an image which has a pothole, pavement marking etc and then the output corresponds to the area of the pothole"</b>
 ``` python gui_input_image_get_pothole.py ``` 
 This will prompt 2 guis where you can move your cursor around to get the required cordinates, and then another where you can enter the GUI. Please do look into the video to better understand how this application works (quite intresting).
 
@@ -49,3 +49,4 @@ This gives us the approximate bird eye view of the edited image, from this we ca
 This is a very generaic application where the user can select two points in the image and after pressing 'ESC' we will output the height distnace/height between the pixels, which can be multiplied by a factor depending on the camera and obtain the horizontal and vertical distances. 
 
 
+The error analysis are found in the error log file, but all applications output the predicted value and can be compared to ground truth values. More comprehensive discussion on each aspect is mentioned in the report which is in the repository. 
