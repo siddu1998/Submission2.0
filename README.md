@@ -9,6 +9,7 @@ conda create env --name <<<NAME OF THE ENV YOU WANT TO GIVE>>> --file <<<Directo
 The above will take a couple of minutes and sets up opencv,matplotlib,numpy,pandas and a bunch of other dependencies required for the set up and running of the submission.
 
 Once you have the environment set up and you have cloned the repository, I have removed the dataset and added a few test images you can test the applications on. The easiest way to understand how all the applications function and see the running, I would <b>highly recommend watching the video</b>, which also explains the code in detail. (If not please do look further to know the commands to run the applications).
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/JL9k1E3dxbc&t=14s/0.jpg)](http://www.youtube.com/watch?v=JL9k1E3dxbc&t=14s "A Dive into the submission")
 
 
 Note: All applications work on python3
