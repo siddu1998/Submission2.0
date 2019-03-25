@@ -12,7 +12,7 @@ Once you have the environment set up and you have cloned the repository, I have 
 [![IMAGE ALT TEXT](https://github.com/siddu1998/Submission2.0/blob/master/Submission%202.0/Core%20Applications%20and%20Algorithms/Screenshot%20from%202019-03-25%2003-24-52.png)](http://www.youtube.com/watch?v=JL9k1E3dxbc&t=14s "A Dive into the submission")
 
 
-Note: All applications work on python3
+Note: All applications work on python3 and are placed inside the Core Applications and Algorithms folder
 To run the application whose task is as follows :<b> "Develop a GUI where the user can select two images, which are at a specific distance and calculate the location of the sign, provided we know the image cordinates of it stored in the sign annotations file"</b>
 
 ```
