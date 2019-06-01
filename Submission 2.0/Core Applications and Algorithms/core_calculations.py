@@ -107,7 +107,7 @@ def trignometric_calculations(x1,x2,f,camera_cordinates_1,camera_cordinates_2):
         w=l*(x2)/f
     #w--> how right or how left the sign is (x-axis)
     #l--> how ahead the sign is (y-axis)
-    print('how inclined:', w+10) #add to the x-cordinate
+    print('how inclined:', w) #add to the x-cordinate
     print('how ahead:', l) #add to the y-cordinate
     
 
@@ -124,9 +124,13 @@ def parsing_camrea_annotations(image,camera_annotations):
     return (camera_cordinates_x,camera_cordinates_y)
             
 def camera_to_sign(camera_cordinates,distancs_tuple,right_or_left):
-    #if sign is to the right
-    return (camera_cordinates[0]+distancs_tuple[0],camera_cordinates[1]+distancs_tuple[1])
-
+    #most correct
+    #(w,l)
+    #utm cordinates x,y how east and how north
+    #how inclined (how east) #how farther away north
+    
+    return (camera_cordinates[0]+distancs_tuple[1],camera_cordinates[1]-distancs_tuple[0]-5)
+  
     
 def error_analysis(predicted_cordinates):
     print("---------------------------------------------------------")
