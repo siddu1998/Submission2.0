@@ -26,16 +26,20 @@ def draw_boxes_and_points(image,sign_cordinates):
 
 def clear_distortions(img_before_distance):
     #distortion matrics
+
     #distortion matrix_smartphone
-    #mtx=[[1203.032354,0,720.0],[0,1284.609285,540.0],[0,0,1]]
-    #dist=[ 0,0,0,0 ]
-    #distortion_matrix_big cameras
-    mtx=[[2468.6668434782608,0,1228.876620888020],[0,2468.6668434782608,1012.976060035710],[0,0,1]] 
-    dist=[ 0.00125859 , 0 ,  -0.00010658,0 ]
+    mtx=[[1203.032354,0,720.0],[0,1284.609285,540.0],[0,0,1]]
+    dist=[ 0,0,0,0 ]
+
+    #distortion_matrix_big camera
+    #mtx=[[2468.6668434782608,0,1228.876620888020],[0,2468.6668434782608,1012.976060035710],[0,0,1]] 
+    #dist=[ 0.00125859 , 0 ,  -0.00010658,0 ]
+    
     #converting into numpy
     mtx = np.array(mtx)
     dist=np.array(dist)
-    #image dimenstions
+    
+    #image dimensions
     image_height,image_width,_=img_before_distance.shape
 
     #pumping distortion matrix
@@ -70,6 +74,7 @@ def find_center_of_sign(sign_details_list):
     sign_top_left_y=sign_details_list[1]
     sign_width=sign_details_list[2]
     sign_height=sign_details_list[3]
+
     location_sign=(int((sign_top_left_x+sign_top_left_x+sign_width)/2),int((sign_top_left_y+sign_top_left_y+sign_height)/2))
     return location_sign
 
