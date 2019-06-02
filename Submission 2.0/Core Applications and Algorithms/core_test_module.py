@@ -5,11 +5,11 @@ import utm
 
 
 
-img_before_file_name='0017781.jpg'
-img_after_file_name='0017782.jpg'
+img_before_file_name='0018767.jpg'
+img_after_file_name='0018768.jpg'
 
-sign_cordinates=parsing_annotations('0_sign_annotations.csv',img_before_file_name)
-sign_cordinates_after=parsing_annotations('0_sign_annotations.csv',img_after_file_name)
+sign_cordinates=parsing_annotations('1_sign_annotations.csv',img_before_file_name)
+sign_cordinates_after=parsing_annotations('1_sign_annotations.csv',img_after_file_name)
 
 # print(sign_cordinates)
 center_cordinates_before=find_center_of_sign(sign_cordinates)
@@ -33,7 +33,7 @@ else:
 
 
 
-utm_=calculation_of_distances(img_before_file_name,img_after_file_name,'0_sign_annotations.csv','0_camera_cordinates.csv')
+utm_=calculation_of_distances(img_before_file_name,img_after_file_name,'1_sign_annotations.csv','1_camera_cordinates.csv')
 print(utm_)
 gps=utm.to_latlon(utm_[0], utm_[1],16, 'N')
 print(gps)

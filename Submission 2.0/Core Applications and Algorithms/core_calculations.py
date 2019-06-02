@@ -128,8 +128,8 @@ def camera_to_sign(camera_cordinates,distancs_tuple,right_or_left):
     #(w,l)
     #utm cordinates x,y how east and how north
     #how inclined (how east) #how farther away north
-    
-    return (camera_cordinates[0]+distancs_tuple[1],camera_cordinates[1]-distancs_tuple[0]-5)
+    return (camera_cordinates[0],camera_cordinates[1])    
+    # return (camera_cordinates[0]+distancs_tuple[1],camera_cordinates[1]-distancs_tuple[0]-5)
   
     
 def error_analysis(predicted_cordinates):
