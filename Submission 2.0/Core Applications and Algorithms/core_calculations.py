@@ -198,6 +198,6 @@ def calculation_of_distances_from_user_points(image_file_name_1,image_file_name_
     right_or_left = finding_relative_location_of_image(points_2,image_width)
     #adding and subtracting images 
     final_positions = camera_to_sign(camera_cordinates,distance_tuple,right_or_left)
-    error_analysis(final_positions)
+    #error_analysis(final_positions)
     
     return final_positions
